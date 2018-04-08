@@ -15,7 +15,9 @@
         "issues": "http://github.com/PersonalGalaxy/X/issues"
     },
     "require": {
-        "php": "~7.2"
+        "php": "~7.2",
+        "personal-galaxy/identity": "^1.0",
+        "innmind/neo4j-onm": "^4.1"
     },
     "autoload": {
         "psr-4": {
