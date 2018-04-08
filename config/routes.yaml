@@ -73,7 +73,7 @@ file_delete:
     controller: App\Controller\FilesController::delete
     methods: [POST]
 
-file_delete:
+file_restore:
     path: /files/{file}/restore
     controller: App\Controller\FilesController::restore
     methods: [POST]
