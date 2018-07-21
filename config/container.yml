@@ -1,0 +1,132 @@
+arguments:
+    metas: array
+    neo4jPassword: string
+
+dependencies:
+    transport @innmind/http-transport/container.yml: []
+
+    dbal @innmind/neo4j-dbal/container.yml:
+        transport: $transport.thrower
+        clock: $infrastructure.clock
+        password: $neo4jPassword
+        scheme: http
+
+    neo4j @innmind/neo4j-onm/container.yml:
+        connection: $dbal.connection
+        metas: $metas
+        extractionStrategy: $infrastructure.neo4j.reflection.extraction
+        injectionStrategy: $infrastructure.neo4j.reflection.injection
+        instanciator: $infrastructure.neo4j.reflection.instanciator
+        additionalTypes: $component.identity.additionalTypes
+        additionalGenerators: $component.identity.additionalGenerators
+
+    commandBus @innmind/command-bus/container.yml:
+        handlers: $component.identity.handlers
+
+    eventBus @innmind/event-bus/container.yml:
+        listeners: $listeners
+
+expose:
+    commands: $commands
+
+services:
+    commands Innmind\CLI\Commands:
+        - $component.identity.command.create
+
+    appCommandBus stack:
+        - $commandBus.queue
+        - $appCommandBus.clearDomainEvents
+        - $appCommandBus.dispatchDomainEvents
+        - $appCommandBus.flush
+        - $commandBus.bus
+
+    appCommandBus:
+        clearDomainEvents Innmind\Neo4j\ONM\CommandBus\ClearDomainEvents:
+            - '@decorated'
+            - $neo4j.container
+
+        dispatchDomainEvents Innmind\Neo4j\ONM\CommandBus\DispatchDomainEvents:
+            - '@decorated'
+            - $eventBus.bus
+            - $neo4j.container
+
+        flush Innmind\Neo4j\ONM\CommandBus\Flush:
+            - '@decorated'
+            - $neo4j.manager
+
+    listeners merge:
+        - $component.identity.listeners
+
+    infrastructure:
+        clock Innmind\TimeContinuum\TimeContinuum\Earth:
+            - $infrastructure.clock.timezone
+
+        clock:
+            timezone Innmind\TimeContinuum\Timezone\Earth\UTC: []
+
+        neo4j:
+            reflection:
+                extraction Innmind\Reflection\ExtractionStrategy\ReflectionStrategy: []
+                injection Innmind\Reflection\InjectionStrategy\ReflectionStrategy: []
+                instanciator Innmind\Reflection\Instanciator\ConstructorLessInstanciator: []
+
+    component:
+        identity:
+            command:
+                create PersonalGalaxy\X\Command\Identity\Create:
+                    - $appCommandBus
+                    - $neo4j.manager
+                    - $component.identity.listener.recoveryCodes
+
+            handlers map<string, callable>:
+                - <PersonalGalaxy\Identity\Command\CreateIdentity, $component.identity.handler.createIdentity>
+                - <PersonalGalaxy\Identity\Command\DeleteIdentity, $component.identity.handler.deleteIdentity>
+                - <PersonalGalaxy\Identity\Command\Identity\ChangePassword, $component.identity.handler.changePassword>
+                - <PersonalGalaxy\Identity\Command\Identity\Disable2FA, $component.identity.handler.disable2FA>
+                - <PersonalGalaxy\Identity\Command\Identity\Enable2FA, $component.identity.handler.enable2FA>
+                - <PersonalGalaxy\Identity\Command\Identity\Validate2FACode, $component.identity.handler.validate2FACode>
+                - <PersonalGalaxy\Identity\Command\Identity\VerifyPassword, $component.identity.handler.verifyPassword>
+
+            handler:
+                createIdentity PersonalGalaxy\Identity\Handler\CreateIdentityHandler:
+                    - $component.identity.repository
+                deleteIdentity PersonalGalaxy\Identity\Handler\DeleteIdentityHandler:
+                    - $component.identity.repository
+                changePassword PersonalGalaxy\Identity\Handler\Identity\ChangePasswordHandler:
+                    - $component.identity.repository
+                disable2FA PersonalGalaxy\Identity\Handler\Identity\Disable2FAHandler:
+                    - $component.identity.repository
+                enable2FA PersonalGalaxy\Identity\Handler\Identity\Enable2FAHandler:
+                    - $component.identity.repository
+                validate2FACode PersonalGalaxy\Identity\Handler\Identity\Validate2FACodeHandler:
+                    - $component.identity.repository
+                verifyPassword PersonalGalaxy\Identity\Handler\Identity\VerifyPasswordHandler:
+                    - $component.identity.repository
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\Identity\Event\Identity\TwoFactorAuthenticationWasEnabled, $component.identity.listeners.recoveryCodes>
+
+            listeners:
+                recoveryCodes set<callable>:
+                    - $component.identity.listener.recoveryCodes
+
+            listener:
+                recoveryCodes PersonalGalaxy\X\Component\Identity\Listener\RecoveryCodes: []
+
+            repository PersonalGalaxy\X\Repository::build:
+                - $neo4j.manager
+                - PersonalGalaxy\X\Component\Identity\Repository\IdentityRepository
+                - PersonalGalaxy\Identity\Entity\Identity
+
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\Identity\Type\EmailType
+                - PersonalGalaxy\X\Component\Identity\Type\PasswordType
+                - PersonalGalaxy\X\Component\Identity\Type\RecoveryCodeType
+                - PersonalGalaxy\X\Component\Identity\Type\SecretKeyType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\Identity\Entity\Identity, $component.identity.generator.identity>
+
+            generator:
+                identity Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Identity\Entity\Identity
