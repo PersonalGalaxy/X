@@ -1,8 +1,12 @@
 language: php
 php:
     - 7.2
-before_script: composer install
-script: vendor/bin/phpunit --coverage-clover=coverage.clover
+services:
+    - docker
+before_script:
+    - composer install
+    - docker build . -t test_x
+script: docker run -it --rm -v "$PWD":/usr/src/lib test_x
 after_script:
     - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
