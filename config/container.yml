@@ -60,6 +60,7 @@ services:
 
     listeners merge:
         - $component.identity.listeners
+        - $component.calendar.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -193,6 +194,17 @@ services:
                     - $neo4j.manager
                     - PersonalGalaxy\X\Component\Calendar\Repository\EventRepository
                     - PersonalGalaxy\Calendar\Entity\Event
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\Calendar\Event\AgendaWasAdded, $component.calendar.listeners.agendaWasAdded>
+
+            listeners:
+                agendaWasAdded set<callable>:
+                    - $component.calendar.listener.bindAgendaToIdentity
+
+            listener:
+                bindAgendaToIdentity PersonalGalaxy\X\Component\Calendar\Listener\BindAgendaToIdentity:
+                    - $dbal.connection
 
             additionalTypes set<string>:
                 - PersonalGalaxy\X\Component\Calendar\Type\Agenda\NameType
