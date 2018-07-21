@@ -235,16 +235,16 @@
         },
         {
             "name": "innmind/cli",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/CLI.git",
-                "reference": "ec4e0a1febbab696b75d8f4235d327bc4a5a0ce7"
+                "reference": "4ff426edc47c08a9816f68458e0f624b2d490a89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/CLI/zipball/ec4e0a1febbab696b75d8f4235d327bc4a5a0ce7",
-                "reference": "ec4e0a1febbab696b75d8f4235d327bc4a5a0ce7",
+                "url": "https://api.github.com/repos/Innmind/CLI/zipball/4ff426edc47c08a9816f68458e0f624b2d490a89",
+                "reference": "4ff426edc47c08a9816f68458e0f624b2d490a89",
                 "shasum": ""
             },
             "require": {
@@ -280,7 +280,7 @@
             "keywords": [
                 "cli"
             ],
-            "time": "2018-03-10T13:36:31+00:00"
+            "time": "2018-07-21T12:25:03+00:00"
         },
         {
             "name": "innmind/command-bus",
@@ -1653,16 +1653,16 @@
         },
         {
             "name": "personal-galaxy/identity",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PersonalGalaxy/Identity.git",
-                "reference": "30cfd2449af3ca76977a067781b4eb4bc903e1f2"
+                "reference": "455863fdc081d271c77c05a5f2c9292a66c3a63c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PersonalGalaxy/Identity/zipball/30cfd2449af3ca76977a067781b4eb4bc903e1f2",
-                "reference": "30cfd2449af3ca76977a067781b4eb4bc903e1f2",
+                "url": "https://api.github.com/repos/PersonalGalaxy/Identity/zipball/455863fdc081d271c77c05a5f2c9292a66c3a63c",
+                "reference": "455863fdc081d271c77c05a5f2c9292a66c3a63c",
                 "shasum": ""
             },
             "require": {
@@ -1693,7 +1693,7 @@
                 }
             ],
             "homepage": "http://github.com/PersonalGalaxy/Identity",
-            "time": "2018-07-19T18:58:17+00:00"
+            "time": "2018-07-21T13:56:58+00:00"
         },
         {
             "name": "psr/container",

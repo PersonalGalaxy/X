@@ -54,7 +54,8 @@ services:
             - '@decorated'
             - $neo4j.manager
 
-    listeners map<string, Innmind\Immutable\SetInterface>: []
+    listeners merge:
+        - $component.identity.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -75,6 +76,7 @@ services:
                 create PersonalGalaxy\X\Command\Identity\Create:
                     - $appCommandBus
                     - $neo4j.manager
+                    - $component.identity.listener.recoveryCodes
 
             handlers map<string, callable>:
                 - <PersonalGalaxy\Identity\Command\CreateIdentity, $component.identity.handler.createIdentity>
@@ -100,6 +102,16 @@ services:
                     - $component.identity.repository
                 verifyPassword PersonalGalaxy\Identity\Handler\Identity\VerifyPasswordHandler:
                     - $component.identity.repository
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\Identity\Event\Identity\TwoFactorAuthenticationWasEnabled, $component.identity.listeners.recoveryCodes>
+
+            listeners:
+                recoveryCodes set<callable>:
+                    - $component.identity.listener.recoveryCodes
+
+            listener:
+                recoveryCodes PersonalGalaxy\X\Component\Identity\Listener\RecoveryCodes: []
 
             repository PersonalGalaxy\X\Repository::build:
                 - $neo4j.manager
