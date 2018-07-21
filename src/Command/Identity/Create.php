@@ -9,6 +9,7 @@ use PersonalGalaxy\Identity\{
     Entity\Identity\Email,
     Entity\Identity\Password,
     Exception\DomainException,
+    Exception\IdentityAlreadyExist,
 };
 use Innmind\CLI\{
     Command,
@@ -46,11 +47,18 @@ final class Create implements Command
             }
         } while ($invalidPassword);
 
-        $this->bus->handle(new CreateIdentity(
-            $this->manager->identities()->new(Identity::class),
-            new Email($arguments->get('email')),
-            $password
-        ));
+        try {
+            $this->bus->handle(new CreateIdentity(
+                $this->manager->identities()->new(Identity::class),
+                new Email($arguments->get('email')),
+                $password
+            ));
+        } catch (IdentityAlreadyExist $e) {
+            $env->output()->write(Str::of("{$arguments->get('email')} alreay exist\n"));
+            $env->exit(1);
+
+            return;
+        }
     }
 
     public function __toString(): string

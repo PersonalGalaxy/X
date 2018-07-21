@@ -7,7 +7,11 @@ use PersonalGalaxy\X\{
     Command\Identity\Create,
     Component\Identity\Entity\Identity,
 };
-use PersonalGalaxy\Identity\Command\CreateIdentity;
+use PersonalGalaxy\Identity\{
+    Command\CreateIdentity,
+    Entity\Identity\Email,
+    Exception\IdentityAlreadyExist,
+};
 use Innmind\CLI\{
     Command,
     Command\Arguments,
@@ -159,6 +163,97 @@ DESC;
             ->expects($this->once())
             ->method('write')
             ->with(Str::of("Password too short\n"));
+
+        $this->assertNull($create(
+            $env,
+            new Arguments(
+                (new Map('string', 'mixed'))
+                    ->put('email', 'foo@bar.baz')
+            ),
+            new Options
+        ));
+    }
+
+    public function testFailsWhenIdentityAlreadyExist()
+    {
+        $create = new Create(
+            $bus = $this->createMock(CommandBusInterface::class),
+            $manager = $this->createMock(Manager::class)
+        );
+        $manager
+            ->expects($this->once())
+            ->method('identities')
+            ->willReturn(new Generators(
+                (new Map('string', Generator::class))
+                    ->put(Identity::class, $generator = $this->createMock(Generator::class))
+            ));
+        $generator
+            ->expects($this->once())
+            ->method('new')
+            ->willReturn($identity = new Identity('9e20a588-6743-4703-88e9-238a64b9f4b7'));
+        $bus
+            ->expects($this->once())
+            ->method('handle')
+            ->will($this->throwException(new IdentityAlreadyExist(new Email('foo@bar.baz'))));
+        $env = $this->createMock(Environment::class);
+        $env
+            ->expects($this->any())
+            ->method('input')
+            ->willReturn(new class implements Readable, Selectable {
+                public function resource()
+                {
+                    return tmpfile();
+                }
+
+                public function read(int $length = null): Str
+                {
+                    return Str::of("foobarbaz\n");
+                }
+
+                public function readLine(): Str
+                {
+                }
+
+                public function position(): Position
+                {
+                }
+
+                public function seek(Position $position, Mode $mode = null): Stream
+                {
+                }
+
+                public function rewind(): Stream
+                {
+                }
+
+                public function end(): bool
+                {
+                }
+
+                public function size(): Size
+                {
+                }
+
+                public function knowsSize(): bool
+                {
+                }
+
+                public function close(): Stream
+                {
+                }
+
+                public function closed(): bool
+                {
+                }
+
+                public function __toString(): string
+                {
+                }
+            });
+        $env
+            ->expects($this->once())
+            ->method('exit')
+            ->with(1);
 
         $this->assertNull($create(
             $env,
