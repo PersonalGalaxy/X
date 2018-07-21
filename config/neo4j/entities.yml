@@ -3,7 +3,7 @@ PersonalGalaxy\Identity\Entity\Identity:
     labels: [User]
     identity:
         property: identity
-        type: PersonalGalaxy\X\Identity\Entity\Identity
+        type: PersonalGalaxy\X\Component\Identity\Entity\Identity
     properties:
         email:
             type: email
