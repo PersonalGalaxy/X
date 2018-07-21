@@ -16,8 +16,15 @@
     },
     "require": {
         "php": "~7.2",
-        "personal-galaxy/identity": "^1.0",
-        "innmind/neo4j-onm": "^4.1"
+        "personal-galaxy/identity": "^1.2",
+        "innmind/neo4j-onm": "^4.3",
+        "innmind/reflection": "^2.0",
+        "innmind/compose": "^1.4",
+        "innmind/cli": "^1.2",
+        "innmind/command-bus": "^2.1",
+        "innmind/http-transport": "^3.2",
+        "symfony/yaml": "^4.0",
+        "symfony/dotenv": "^4.1"
     },
     "autoload": {
         "psr-4": {
@@ -32,7 +39,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0",
-        "giorgiosironi/eris": "^0.10.0"
+        "giorgiosironi/eris": "^0.10.0",
+        "mnapoli/silly": "^1.7",
+        "innmind/server-control": "^2.4",
+        "innmind/graphviz": "^1.0"
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always"

@@ -1,0 +1,19 @@
+PersonalGalaxy\Identity\Entity\Identity:
+    type: aggregate
+    labels: [User]
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Identity\Entity\Identity
+    properties:
+        email:
+            type: email
+        password:
+            type: password
+        secretKey:
+            type: secret_key
+            nullable: true
+        recoveryCodes:
+            type: set
+            inner: recovery_code
+            set_type: PersonalGalaxy\Identity\Entity\Identity\RecoveryCode
+            nullable: true

@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types = 1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Innmind\CLI\{
+    Main,
+    Environment,
+};
+use Innmind\Compose\ContainerBuilder\ContainerBuilder;
+use Innmind\Url\Path;
+use Innmind\Immutable\Map;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Dotenv\Dotenv;
+
+new class extends Main {
+    protected function main(Environment $env): void
+    {
+        $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
+        $container = (new ContainerBuilder)(
+            new Path(__DIR__.'/../config/container.yml'),
+            (new Map('string', 'mixed'))
+                ->put('metas', [Yaml::parseFile(__DIR__.'/../config/neo4j/entities.yml')])
+                ->put('neo4jPassword', $dotenv['NEO4J_PASSWORD'] ?? 'neo4j')
+        );
+
+        $run = $container->get('commands');
+        $run($env);
+    }
+};
