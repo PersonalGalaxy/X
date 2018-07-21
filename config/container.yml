@@ -21,7 +21,7 @@ dependencies:
         additionalGenerators: $infrastructure.neo4j.additionalGenerators
 
     commandBus @innmind/command-bus/container.yml:
-        handlers: $component.identity.handlers
+        handlers: $handlers
 
     eventBus @innmind/event-bus/container.yml:
         listeners: $listeners
@@ -53,6 +53,10 @@ services:
         flush Innmind\Neo4j\ONM\CommandBus\Flush:
             - '@decorated'
             - $neo4j.manager
+
+    handlers merge:
+        - $component.identity.handlers
+        - $component.calendar.handlers
 
     listeners merge:
         - $component.identity.listeners
@@ -144,6 +148,52 @@ services:
                     - PersonalGalaxy\X\Component\Identity\Entity\Identity
 
         calendar:
+            handlers map<string, callable>:
+                - <PersonalGalaxy\Calendar\Command\AddAgenda, $component.calendar.handler.agenda.add>
+                - <PersonalGalaxy\Calendar\Command\DeleteAgenda, $component.calendar.handler.agenda.delete>
+                - <PersonalGalaxy\Calendar\Command\RenameAgenda, $component.calendar.handler.agenda.rename>
+                - <PersonalGalaxy\Calendar\Command\AddEvent, $component.calendar.handler.event.add>
+                - <PersonalGalaxy\Calendar\Command\CancelEvent, $component.calendar.handler.event.cancel>
+                - <PersonalGalaxy\Calendar\Command\MoveEvent, $component.calendar.handler.event.move>
+                - <PersonalGalaxy\Calendar\Command\RenameEvent, $component.calendar.handler.event.rename>
+                - <PersonalGalaxy\Calendar\Command\Event\AddNote, $component.calendar.handler.event.addNote>
+
+            handler:
+                agenda:
+                    add PersonalGalaxy\Calendar\Handler\AddAgendaHandler:
+                        - $component.calendar.repository.agenda
+                    delete PersonalGalaxy\Calendar\Handler\DeleteAgendaHandler:
+                        - $component.calendar.repository.agenda
+                        - $component.calendar.repository.event
+                        - $component.calendar.handler.event.cancel
+                    rename PersonalGalaxy\Calendar\Handler\RenameAgendaHandler:
+                        - $component.calendar.repository.agenda
+                event:
+                    add PersonalGalaxy\Calendar\Handler\AddEventHandler:
+                        - $component.calendar.repository.event
+                        - $component.calendar.repository.agenda
+                        - $infrastructure.clock
+                    cancel PersonalGalaxy\Calendar\Handler\CancelEventHandler:
+                        - $component.calendar.repository.event
+                    move PersonalGalaxy\Calendar\Handler\MoveEventHandler:
+                        - $component.calendar.repository.event
+                        - $infrastructure.clock
+                    rename PersonalGalaxy\Calendar\Handler\RenameEventHandler:
+                        - $component.calendar.repository.event
+                    addNote PersonalGalaxy\Calendar\Handler\Event\AddNoteHandler:
+                        - $component.calendar.repository.event
+
+            repository:
+                agenda PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\Calendar\Repository\AgendaRepository
+                    - PersonalGalaxy\Calendar\Entity\Agenda
+
+                event PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\Calendar\Repository\EventRepository
+                    - PersonalGalaxy\Calendar\Entity\Event
+
             additionalTypes set<string>:
                 - PersonalGalaxy\X\Component\Calendar\Type\Agenda\NameType
                 - PersonalGalaxy\X\Component\Calendar\Type\Agenda\UserType
