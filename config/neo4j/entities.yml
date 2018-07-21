@@ -17,3 +17,31 @@ PersonalGalaxy\Identity\Entity\Identity:
             inner: recovery_code
             set_type: PersonalGalaxy\Identity\Entity\Identity\RecoveryCode
             nullable: true
+
+PersonalGalaxy\Calendar\Entity\Agenda:
+    type: aggregate
+    labels: [Calendar, Agenda]
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Component\Calendar\Entity\Agenda
+    properties:
+        user:
+            type: calendar_agenda_user
+        name:
+            type: calendar_agenda_name
+
+PersonalGalaxy\Calendar\Entity\Event:
+    type: aggregate
+    labels: [Calendar, Event]
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Component\Calendar\Entity\Event
+    properties:
+        agenda:
+            type: calendar_event_agenda
+        name:
+            type: calendar_event_name
+        slot:
+            type: calendar_event_slot
+        note:
+            type: calendar_event_note

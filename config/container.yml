@@ -17,8 +17,8 @@ dependencies:
         extractionStrategy: $infrastructure.neo4j.reflection.extraction
         injectionStrategy: $infrastructure.neo4j.reflection.injection
         instanciator: $infrastructure.neo4j.reflection.instanciator
-        additionalTypes: $component.identity.additionalTypes
-        additionalGenerators: $component.identity.additionalGenerators
+        additionalTypes: $infrastructure.neo4j.additionalTypes
+        additionalGenerators: $infrastructure.neo4j.additionalGenerators
 
     commandBus @innmind/command-bus/container.yml:
         handlers: $component.identity.handlers
@@ -69,6 +69,18 @@ services:
                 extraction Innmind\Reflection\ExtractionStrategy\ReflectionStrategy: []
                 injection Innmind\Reflection\InjectionStrategy\ReflectionStrategy: []
                 instanciator Innmind\Reflection\Instanciator\ConstructorLessInstanciator: []
+
+            types set<string>:
+                - Innmind\Neo4j\ONM\Type\PointInTimeType
+
+            additionalTypes merge:
+                - $component.identity.additionalTypes
+                - $component.calendar.additionalTypes
+                - $infrastructure.neo4j.types
+
+            additionalGenerators merge:
+                - $component.identity.additionalGenerators
+                - $component.calendar.additionalGenerators
 
     component:
         identity:
@@ -130,3 +142,22 @@ services:
             generator:
                 identity Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
                     - PersonalGalaxy\X\Component\Identity\Entity\Identity
+
+        calendar:
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\Calendar\Type\Agenda\NameType
+                - PersonalGalaxy\X\Component\Calendar\Type\Agenda\UserType
+                - PersonalGalaxy\X\Component\Calendar\Type\Event\AgendaType
+                - PersonalGalaxy\X\Component\Calendar\Type\Event\NameType
+                - PersonalGalaxy\X\Component\Calendar\Type\Event\NoteType
+                - PersonalGalaxy\X\Component\Calendar\Type\Event\SlotType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\Calendar\Entity\Agenda, $component.calendar.generator.agenda>
+                - <PersonalGalaxy\X\Component\Calendar\Entity\Event, $component.calendar.generator.event>
+
+            generator:
+                agenda Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Calendar\Entity\Agenda
+                event Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Calendar\Entity\Event
