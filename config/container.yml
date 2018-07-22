@@ -151,7 +151,7 @@ services:
         calendar:
             handlers map<string, callable>:
                 - <PersonalGalaxy\Calendar\Command\AddAgenda, $component.calendar.handler.agenda.add>
-                - <PersonalGalaxy\Calendar\Command\DeleteAgenda, $component.calendar.handler.agenda.delete>
+                - <PersonalGalaxy\Calendar\Command\DeleteAgenda, $component.calendar.handler.agenda.wrap.delete>
                 - <PersonalGalaxy\Calendar\Command\RenameAgenda, $component.calendar.handler.agenda.rename>
                 - <PersonalGalaxy\Calendar\Command\AddEvent, $component.calendar.handler.event.add>
                 - <PersonalGalaxy\Calendar\Command\CancelEvent, $component.calendar.handler.event.cancel>
@@ -169,6 +169,10 @@ services:
                         - $component.calendar.handler.event.cancel
                     rename PersonalGalaxy\Calendar\Handler\RenameAgendaHandler:
                         - $component.calendar.repository.agenda
+                    wrap:
+                        delete PersonalGalaxy\X\Component\Calendar\Handler\DeleteAgendaHandler:
+                            - $component.calendar.handler.agenda.delete
+                            - $dbal.connection
                 event:
                     add PersonalGalaxy\Calendar\Handler\AddEventHandler:
                         - $component.calendar.repository.event
