@@ -35,6 +35,7 @@ services:
 
     appCommandBus stack:
         - $commandBus.queue
+        - $appCommandBus.transaction
         - $appCommandBus.clearDomainEvents
         - $appCommandBus.dispatchDomainEvents
         - $appCommandBus.flush
@@ -51,6 +52,10 @@ services:
             - $neo4j.container
 
         flush Innmind\Neo4j\ONM\CommandBus\Flush:
+            - '@decorated'
+            - $neo4j.manager
+
+        transaction Innmind\Neo4j\ONM\CommandBus\Transaction:
             - '@decorated'
             - $neo4j.manager
 
