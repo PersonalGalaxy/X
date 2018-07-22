@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f93c4ae499b182a885a7519ce2cf374",
+    "content-hash": "3962f7d1b772a8195c4f511db1bedfaf",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -688,16 +688,16 @@
         },
         {
             "name": "innmind/neo4j-onm",
-            "version": "4.3.0",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/neo4j-onm.git",
-                "reference": "2653876c298d1f420525a7fe74a0a7e4e0249413"
+                "reference": "f786ac3eb372babc1c09a4b1a0dc0843badea54e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/neo4j-onm/zipball/2653876c298d1f420525a7fe74a0a7e4e0249413",
-                "reference": "2653876c298d1f420525a7fe74a0a7e4e0249413",
+                "url": "https://api.github.com/repos/Innmind/neo4j-onm/zipball/f786ac3eb372babc1c09a4b1a0dc0843badea54e",
+                "reference": "f786ac3eb372babc1c09a4b1a0dc0843badea54e",
                 "shasum": ""
             },
             "require": {
@@ -744,7 +744,7 @@
                 "neo4j",
                 "node"
             ],
-            "time": "2018-07-19T18:43:18+00:00"
+            "time": "2018-07-22T15:12:41+00:00"
         },
         {
             "name": "innmind/reflection",
@@ -1650,6 +1650,54 @@
                 "random"
             ],
             "time": "2018-07-02T15:55:56+00:00"
+        },
+        {
+            "name": "personal-galaxy/calendar",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PersonalGalaxy/Calendar.git",
+                "reference": "4f7508a9eb82faee93856faefb980739121ded62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PersonalGalaxy/Calendar/zipball/4f7508a9eb82faee93856faefb980739121ded62",
+                "reference": "4f7508a9eb82faee93856faefb980739121ded62",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/event-bus": "^2.1",
+                "innmind/immutable": "^2.8",
+                "innmind/specification": "^1.0",
+                "innmind/time-continuum": "^1.1",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PersonalGalaxy\\Calendar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Calendar model",
+            "homepage": "http://github.com/PersonalGalaxy/Calendar",
+            "keywords": [
+                "calendar"
+            ],
+            "time": "2018-04-07T15:06:47+00:00"
         },
         {
             "name": "personal-galaxy/identity",
