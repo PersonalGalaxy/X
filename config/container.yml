@@ -68,6 +68,7 @@ services:
     listeners merge:
         - $component.identity.listeners
         - $component.calendar.listeners
+        - $component.files.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -298,6 +299,32 @@ services:
                     - $component.files.repository.folder
                     - $component.files.handler.file.remove
                     - $component.files.handler.folder.remove
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\Files\Event\FolderWasAdded, $component.files.listeners.folderWasAdded>
+                - <PersonalGalaxy\Files\Event\FolderWasMovedToADifferentFolder, $component.files.listeners.folderWasMovedToADifferentFolder>
+                - <PersonalGalaxy\Files\Event\FileWasAdded, $component.files.listeners.fileWasAdded>
+                - <PersonalGalaxy\Files\Event\FileWasMovedToADifferentFolder, $component.files.listeners.fileWasMovedToADifferentFolder>
+
+            listeners:
+                folderWasAdded set<callable>:
+                    - $component.files.listener.bindFolderToParent
+                folderWasMovedToADifferentFolder set<callable>:
+                    - $component.files.listener.bindFolderToNewParent
+                fileWasAdded set<callable>:
+                    - $component.files.listener.bindFileToFolder
+                fileWasMovedToADifferentFolder set<callable>:
+                    - $component.files.listener.bindFileToNewFolder
+
+            listener:
+                bindFolderToParent PersonalGalaxy\X\Component\Files\Listener\BindFolderToParent:
+                    - $dbal.connection
+                bindFolderToNewParent PersonalGalaxy\X\Component\Files\Listener\BindFolderToNewParent:
+                    - $dbal.connection
+                bindFileToFolder PersonalGalaxy\X\Component\Files\Listener\BindFileToFolder:
+                    - $dbal.connection
+                bindFileToNewFolder PersonalGalaxy\X\Component\Files\Listener\BindFileToNewFolder:
+                    - $dbal.connection
 
             repository:
                 folder PersonalGalaxy\X\Repository::build:
