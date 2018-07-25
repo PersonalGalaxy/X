@@ -92,6 +92,7 @@ services:
             additionalGenerators merge:
                 - $component.identity.additionalGenerators
                 - $component.calendar.additionalGenerators
+                - $component.files.additionalGenerators
 
     component:
         identity:
@@ -240,3 +241,13 @@ services:
                 - PersonalGalaxy\X\Component\Files\Type\Folder\IdentityType
                 - PersonalGalaxy\X\Component\Files\Type\File\NameType
                 - PersonalGalaxy\X\Component\Files\Type\File\MediaTypeType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\Files\Entity\Folder, $component.files.generator.folder>
+                - <PersonalGalaxy\X\Component\Files\Entity\File, $component.files.generator.file>
+
+            generator:
+                folder Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Files\Entity\Folder
+                file Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Files\Entity\File
