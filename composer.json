@@ -25,7 +25,8 @@
         "innmind/http-transport": "^3.2",
         "symfony/yaml": "^4.0",
         "symfony/dotenv": "^4.1",
-        "personal-galaxy/calendar": "^1.0"
+        "personal-galaxy/calendar": "^1.0",
+        "personal-galaxy/files": "^1.0"
     },
     "autoload": {
         "psr-4": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3962f7d1b772a8195c4f511db1bedfaf",
+    "content-hash": "5964c5abf6a15f3d4247c54133b8d1a6",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1698,6 +1698,51 @@
                 "calendar"
             ],
             "time": "2018-04-07T15:06:47+00:00"
+        },
+        {
+            "name": "personal-galaxy/files",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PersonalGalaxy/Files.git",
+                "reference": "6f97950b41c2d05e0f2ca8d8c17f0aa5bc8cfaee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PersonalGalaxy/Files/zipball/6f97950b41c2d05e0f2ca8d8c17f0aa5bc8cfaee",
+                "reference": "6f97950b41c2d05e0f2ca8d8c17f0aa5bc8cfaee",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/event-bus": "^2.1",
+                "innmind/filesystem": "^3.1",
+                "innmind/immutable": "^2.8",
+                "innmind/specification": "^1.0",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.9.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PersonalGalaxy\\Files\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Model to store files",
+            "homepage": "http://github.com/PersonalGalaxy/Files",
+            "time": "2018-04-02T08:12:13+00:00"
         },
         {
             "name": "personal-galaxy/identity",

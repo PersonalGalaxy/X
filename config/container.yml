@@ -86,6 +86,7 @@ services:
             additionalTypes merge:
                 - $component.identity.additionalTypes
                 - $component.calendar.additionalTypes
+                - $component.files.additionalTypes
                 - $infrastructure.neo4j.types
 
             additionalGenerators merge:
@@ -232,3 +233,10 @@ services:
                     - PersonalGalaxy\X\Component\Calendar\Entity\Agenda
                 event Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
                     - PersonalGalaxy\X\Component\Calendar\Entity\Event
+
+        files:
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\Files\Type\Folder\NameType
+                - PersonalGalaxy\X\Component\Files\Type\Folder\IdentityType
+                - PersonalGalaxy\X\Component\Files\Type\File\NameType
+                - PersonalGalaxy\X\Component\Files\Type\File\MediaTypeType
