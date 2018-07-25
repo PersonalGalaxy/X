@@ -19,6 +19,7 @@ class ContainerTest extends TestCase
             (new Map('string', 'mixed'))
                 ->put('metas', [Yaml::parseFile(__DIR__.'/../config/neo4j/entities.yml')])
                 ->put('neo4jPassword', 'ci')
+                ->put('filesStoragePath', '/tmp/personal-galaxy')
         );
 
         $this->assertInstanceOf(Commands::class, $container->get('commands'));
