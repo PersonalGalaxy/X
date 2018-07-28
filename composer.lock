@@ -2029,16 +2029,16 @@
         },
         {
             "name": "personal-galaxy/rss",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PersonalGalaxy/RSS.git",
-                "reference": "0b1a390daa3ea92b7a7f3ff90a73bc624fdea03d"
+                "reference": "03a1a86a0a06504fab1479c6339133f9bbcfe2ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PersonalGalaxy/RSS/zipball/0b1a390daa3ea92b7a7f3ff90a73bc624fdea03d",
-                "reference": "0b1a390daa3ea92b7a7f3ff90a73bc624fdea03d",
+                "url": "https://api.github.com/repos/PersonalGalaxy/RSS/zipball/03a1a86a0a06504fab1479c6339133f9bbcfe2ea",
+                "reference": "03a1a86a0a06504fab1479c6339133f9bbcfe2ea",
                 "shasum": ""
             },
             "require": {
@@ -2076,7 +2076,7 @@
                 "reader",
                 "rss"
             ],
-            "time": "2018-07-28T10:20:48+00:00"
+            "time": "2018-07-28T12:09:29+00:00"
         },
         {
             "name": "psr/container",

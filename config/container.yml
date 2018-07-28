@@ -66,6 +66,7 @@ services:
         - $component.identity.handlers
         - $component.calendar.handlers
         - $component.files.handlers
+        - $component.rss.handlers
 
     listeners merge:
         - $component.identity.listeners
@@ -378,6 +379,37 @@ services:
                     - PersonalGalaxy\X\Component\Files\Entity\File
 
         rss:
+            handlers map<string, callable>:
+                - <PersonalGalaxy\RSS\Command\AddSubscription, $component.rss.handler.subscription.add>
+                - <PersonalGalaxy\RSS\Command\FetchSubscription, $component.rss.handler.subscription.fetch>
+                - <PersonalGalaxy\RSS\Command\RemoveSubscription, $component.rss.handler.subscription.remove>
+                - <PersonalGalaxy\RSS\Command\MarkArticleAsRead, $component.rss.handler.article.markAsRead>
+
+            handler:
+                subscription:
+                    add PersonalGalaxy\RSS\Handler\AddSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                    fetch PersonalGalaxy\RSS\Handler\FetchSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                        - $component.rss.repository.article
+                        - $component.rss.crawler
+                    remove PersonalGalaxy\RSS\Handler\RemoveSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                article:
+                    markAsRead PersonalGalaxy\RSS\Handler\MarkArticleAsReadHandler:
+                        - $component.rss.repository.article
+
+            repository:
+                subscription PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\RSS\Repository\SubscriptionRepository
+                    - PersonalGalaxy\RSS\Entity\Subscription
+
+                article PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\RSS\Repository\ArticleRepository
+                    - PersonalGalaxy\RSS\Entity\Article
+
             additionalTypes set<string>:
                 - PersonalGalaxy\X\Component\RSS\Type\Article\AuthorType
                 - PersonalGalaxy\X\Component\RSS\Type\Article\DescriptionType
