@@ -40,7 +40,7 @@ class EmptyTrashHandlerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with($this->callback(static function($query): bool {
-                return (string) $query === 'MATCH (:Files { trashed: {trashed} })<-[rels:CHILD_OF*]-(:Files) FOREACH (rel in rels | DELETE rel)' &&
+                return (string) $query === 'MATCH (:Files { trashed: {trashed} })<-[rels:CHILD_OF*]-(:Files) WITH collect(rels) as rels FOREACH (rel in rels | DELETE rel)' &&
                     $query->parameters()->get('trashed')->value() === true;
             }));
 

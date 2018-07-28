@@ -36,6 +36,7 @@ final class RemoveFolderHandler
                 ->linkedTo(null, ['Files'])
                 ->through('CHILD_OF', 'rels', Relationship::LEFT)
                 ->withAnyDistance()
+                ->with('collect(rels) as rels')
                 ->foreach('(rel in rels | DELETE rel)')
         );
         ($this->handle)($wished);
