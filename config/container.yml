@@ -73,6 +73,16 @@ services:
         - $component.calendar.listeners
         - $component.files.listeners
         - $component.rss.listeners
+        - $listeners.override
+
+    listeners:
+        override map<string, Innmind\Immutable\SetInterface>:
+            - <PersonalGalaxy\Identity\Event\IdentityWasCreated, $listeners.override.identityWasCreated> # necessary as multiple components listen to the same event
+
+        override:
+            identityWasCreated merge:
+                - $component.calendar.listeners.identityWasCreated
+                - $component.files.listeners.identityWasCreated
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -225,14 +235,20 @@ services:
 
             listeners map<string, Innmind\Immutable\SetInterface>:
                 - <PersonalGalaxy\Calendar\Event\AgendaWasAdded, $component.calendar.listeners.agendaWasAdded>
+                - <PersonalGalaxy\Identity\Event\IdentityWasCreated, $component.calendar.listeners.identityWasCreated>
 
             listeners:
                 agendaWasAdded set<callable>:
                     - $component.calendar.listener.bindAgendaToIdentity
+                identityWasCreated set<callable>:
+                    - $component.calendar.listener.createDefaultAgenda
 
             listener:
                 bindAgendaToIdentity PersonalGalaxy\X\Component\Calendar\Listener\BindAgendaToIdentity:
                     - $dbal.connection
+                createDefaultAgenda PersonalGalaxy\X\Component\Calendar\Listener\CreateDefaultAgenda:
+                    - $appCommandBus
+                    - $neo4j.manager
 
             additionalTypes set<string>:
                 - PersonalGalaxy\X\Component\Calendar\Type\Agenda\NameType

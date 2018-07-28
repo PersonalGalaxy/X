@@ -377,16 +377,16 @@
         },
         {
             "name": "innmind/compose",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Compose.git",
-                "reference": "a7c3ed61a54fc6b9193b6f74dba752258a3389fb"
+                "reference": "a5c4b8ec080f47892abac0d8953c406275fa9297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Compose/zipball/a7c3ed61a54fc6b9193b6f74dba752258a3389fb",
-                "reference": "a7c3ed61a54fc6b9193b6f74dba752258a3389fb",
+                "url": "https://api.github.com/repos/Innmind/Compose/zipball/a5c4b8ec080f47892abac0d8953c406275fa9297",
+                "reference": "a5c4b8ec080f47892abac0d8953c406275fa9297",
                 "shasum": ""
             },
             "require": {
@@ -441,7 +441,7 @@
                 "locator",
                 "service"
             ],
-            "time": "2018-04-25T06:02:12+00:00"
+            "time": "2018-07-28T14:16:02+00:00"
         },
         {
             "name": "innmind/crawler",
