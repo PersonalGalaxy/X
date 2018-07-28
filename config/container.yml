@@ -383,7 +383,7 @@ services:
             handlers map<string, callable>:
                 - <PersonalGalaxy\RSS\Command\AddSubscription, $component.rss.handler.subscription.add>
                 - <PersonalGalaxy\RSS\Command\FetchSubscription, $component.rss.handler.subscription.fetch>
-                - <PersonalGalaxy\RSS\Command\RemoveSubscription, $component.rss.handler.subscription.remove>
+                - <PersonalGalaxy\RSS\Command\RemoveSubscription, $component.rss.handler.wrap.subscription.remove>
                 - <PersonalGalaxy\RSS\Command\MarkArticleAsRead, $component.rss.handler.article.markAsRead>
 
             handler:
@@ -399,6 +399,11 @@ services:
                 article:
                     markAsRead PersonalGalaxy\RSS\Handler\MarkArticleAsReadHandler:
                         - $component.rss.repository.article
+                wrap:
+                    subscription:
+                        remove PersonalGalaxy\X\Component\RSS\Handler\RemoveSubscriptionHandler:
+                            - $component.rss.handler.subscription.remove
+                            - $dbal.connection
 
             listeners map<string, Innmind\Immutable\SetInterface>:
                 - <PersonalGalaxy\RSS\Event\SubscriptionWasAdded, $component.rss.listeners.subscriptionWasAdded>
