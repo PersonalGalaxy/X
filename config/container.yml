@@ -27,6 +27,8 @@ dependencies:
     eventBus @innmind/event-bus/container.yml:
         listeners: $listeners
 
+    xml @innmind/xml/container.yml: []
+
 expose:
     commands: $commands
 
@@ -371,3 +373,20 @@ services:
                     - PersonalGalaxy\X\Component\Files\Entity\Folder
                 file Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
                     - PersonalGalaxy\X\Component\Files\Entity\File
+
+        rss:
+            crawler Innmind\Crawler\Crawler\Crawler:
+                - $transport.conservative
+                - $component.rss.parser
+
+            parser Innmind\Crawler\Parser\SequenceParser:
+                - $component.rss.parser.rss
+                - $component.rss.parser.atom
+
+            parser:
+                rss PersonalGalaxy\RSS\Parser\RSS:
+                    - $xml.reader
+                    - $infrastructure.clock
+                atom PersonalGalaxy\RSS\Parser\Atom:
+                    - $xml.reader
+                    - $infrastructure.clock
