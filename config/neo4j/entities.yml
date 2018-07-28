@@ -45,3 +45,33 @@ PersonalGalaxy\Calendar\Entity\Event:
             type: calendar_event_slot
         note:
             type: calendar_event_note
+
+PersonalGalaxy\Files\Entity\Folder:
+    type: aggregate
+    labels: ['Files', 'Folder']
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Component\Files\Entity\Folder
+    properties:
+        name:
+            type: files_folder_name
+        parent:
+            type: files_folder_identity
+        trashed:
+            type: bool
+
+PersonalGalaxy\Files\Entity\File:
+    type: aggregate
+    labels: ['Files', 'File']
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Component\Files\Entity\File
+    properties:
+        name:
+            type: files_file_name
+        folder:
+            type: files_folder_identity
+        mediaType:
+            type: files_file_media_type
+        trashed:
+            type: bool

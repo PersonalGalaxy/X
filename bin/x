@@ -23,6 +23,7 @@ new class extends Main {
             (new Map('string', 'mixed'))
                 ->put('metas', [Yaml::parseFile(__DIR__.'/../config/neo4j/entities.yml')])
                 ->put('neo4jPassword', $dotenv['NEO4J_PASSWORD'] ?? 'neo4j')
+                ->put('filesStoragePath', $dotenv['FILES_STORAGE_PATH'] ?? __DIR__.'/../var/storage/files')
         );
 
         $run = $container->get('commands');

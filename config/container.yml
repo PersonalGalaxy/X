@@ -1,6 +1,7 @@
 arguments:
     metas: array
     neo4jPassword: string
+    filesStoragePath: string
 
 dependencies:
     transport @innmind/http-transport/container.yml: []
@@ -62,10 +63,12 @@ services:
     handlers merge:
         - $component.identity.handlers
         - $component.calendar.handlers
+        - $component.files.handlers
 
     listeners merge:
         - $component.identity.listeners
         - $component.calendar.listeners
+        - $component.files.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -86,11 +89,20 @@ services:
             additionalTypes merge:
                 - $component.identity.additionalTypes
                 - $component.calendar.additionalTypes
+                - $component.files.additionalTypes
                 - $infrastructure.neo4j.types
 
             additionalGenerators merge:
                 - $component.identity.additionalGenerators
                 - $component.calendar.additionalGenerators
+                - $component.files.additionalGenerators
+
+        files:
+            storage Innmind\Filesystem\Adapter\HashedNameAdapter:
+                - $infrastructure.files.storage.inner
+            storage:
+                inner Innmind\Filesystem\Adapter\FilesystemAdapter:
+                    - $filesStoragePath
 
     component:
         identity:
@@ -232,3 +244,130 @@ services:
                     - PersonalGalaxy\X\Component\Calendar\Entity\Agenda
                 event Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
                     - PersonalGalaxy\X\Component\Calendar\Entity\Event
+
+        files:
+            handlers map<string, callable>:
+                - <PersonalGalaxy\Files\Command\AddFolder, $component.files.handler.folder.add>
+                - <PersonalGalaxy\Files\Command\MoveFolder, $component.files.handler.folder.move>
+                - <PersonalGalaxy\Files\Command\RemoveFolder, $component.files.handler.wrap.folder.remove>
+                - <PersonalGalaxy\Files\Command\RenameFolder, $component.files.handler.folder.rename>
+                - <PersonalGalaxy\Files\Command\RestoreFolder, $component.files.handler.folder.restore>
+                - <PersonalGalaxy\Files\Command\TrashFolder, $component.files.handler.folder.trash>
+                - <PersonalGalaxy\Files\Command\AddFile, $component.files.handler.file.add>
+                - <PersonalGalaxy\Files\Command\MoveFile, $component.files.handler.file.move>
+                - <PersonalGalaxy\Files\Command\RemoveFile, $component.files.handler.wrap.file.remove>
+                - <PersonalGalaxy\Files\Command\RenameFile, $component.files.handler.file.rename>
+                - <PersonalGalaxy\Files\Command\RestoreFile, $component.files.handler.file.restore>
+                - <PersonalGalaxy\Files\Command\TrashFile, $component.files.handler.file.trash>
+                - <PersonalGalaxy\Files\Command\EmptyTrash, $component.files.handler.wrap.emptyTrash>
+
+            handler:
+                folder:
+                    add PersonalGalaxy\Files\Handler\AddFolderHandler:
+                        - $component.files.repository.folder
+                    move PersonalGalaxy\Files\Handler\MoveFolderHandler:
+                        - $component.files.repository.folder
+                    remove PersonalGalaxy\Files\Handler\RemoveFolderHandler:
+                        - $component.files.repository.file
+                        - $component.files.repository.folder
+                        - $component.files.handler.file.remove
+                    rename PersonalGalaxy\Files\Handler\RenameFolderHandler:
+                        - $component.files.repository.folder
+                    restore PersonalGalaxy\Files\Handler\RestoreFolderHandler:
+                        - $component.files.repository.folder
+                    trash PersonalGalaxy\Files\Handler\TrashFolderHandler:
+                        - $component.files.repository.folder
+                file:
+                    add PersonalGalaxy\Files\Handler\AddFileHandler:
+                        - $component.files.repository.file
+                        - $component.files.repository.folder
+                        - $infrastructure.files.storage
+                    move PersonalGalaxy\Files\Handler\MoveFileHandler:
+                        - $component.files.repository.file
+                        - $component.files.repository.folder
+                    remove PersonalGalaxy\Files\Handler\RemoveFileHandler:
+                        - $component.files.repository.file
+                        - $infrastructure.files.storage
+                    rename PersonalGalaxy\Files\Handler\RenameFileHandler:
+                        - $component.files.repository.file
+                    restore PersonalGalaxy\Files\Handler\RestoreFileHandler:
+                        - $component.files.repository.file
+                    trash PersonalGalaxy\Files\Handler\TrashFileHandler:
+                        - $component.files.repository.file
+                emptyTrash PersonalGalaxy\Files\Handler\EmptyTrashHandler:
+                    - $component.files.repository.file
+                    - $component.files.repository.folder
+                    - $component.files.handler.file.remove
+                    - $component.files.handler.folder.remove
+
+                wrap:
+                    folder:
+                        remove PersonalGalaxy\X\Component\Files\Handler\RemoveFolderHandler:
+                            - $component.files.handler.folder.remove
+                            - $dbal.connection
+                    file:
+                        remove PersonalGalaxy\X\Component\Files\Handler\RemoveFileHandler:
+                            - $component.files.handler.file.remove
+                            - $dbal.connection
+                    emptyTrash PersonalGalaxy\X\Component\Files\Handler\EmptyTrashHandler:
+                        - $component.files.handler.emptyTrash
+                        - $dbal.connection
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\Files\Event\FolderWasAdded, $component.files.listeners.folderWasAdded>
+                - <PersonalGalaxy\Files\Event\FolderWasMovedToADifferentFolder, $component.files.listeners.folderWasMovedToADifferentFolder>
+                - <PersonalGalaxy\Files\Event\FileWasAdded, $component.files.listeners.fileWasAdded>
+                - <PersonalGalaxy\Files\Event\FileWasMovedToADifferentFolder, $component.files.listeners.fileWasMovedToADifferentFolder>
+                - <PersonalGalaxy\Identity\Event\IdentityWasCreated, $component.files.listeners.identityWasCreated>
+
+            listeners:
+                folderWasAdded set<callable>:
+                    - $component.files.listener.bindFolderToParent
+                folderWasMovedToADifferentFolder set<callable>:
+                    - $component.files.listener.bindFolderToNewParent
+                fileWasAdded set<callable>:
+                    - $component.files.listener.bindFileToFolder
+                fileWasMovedToADifferentFolder set<callable>:
+                    - $component.files.listener.bindFileToNewFolder
+                identityWasCreated set<callable>:
+                    - $component.files.listener.createRootFolder
+
+            listener:
+                bindFolderToParent PersonalGalaxy\X\Component\Files\Listener\BindFolderToParent:
+                    - $dbal.connection
+                bindFolderToNewParent PersonalGalaxy\X\Component\Files\Listener\BindFolderToNewParent:
+                    - $dbal.connection
+                bindFileToFolder PersonalGalaxy\X\Component\Files\Listener\BindFileToFolder:
+                    - $dbal.connection
+                bindFileToNewFolder PersonalGalaxy\X\Component\Files\Listener\BindFileToNewFolder:
+                    - $dbal.connection
+                createRootFolder PersonalGalaxy\X\Component\Files\Listener\CreateRootFolder:
+                    - $dbal.connection
+                    - $neo4j.manager
+
+            repository:
+                folder PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\Files\Repository\FolderRepository
+                    - PersonalGalaxy\Files\Entity\Folder
+
+                file PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\Files\Repository\FileRepository
+                    - PersonalGalaxy\Files\Entity\File
+
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\Files\Type\Folder\NameType
+                - PersonalGalaxy\X\Component\Files\Type\Folder\IdentityType
+                - PersonalGalaxy\X\Component\Files\Type\File\NameType
+                - PersonalGalaxy\X\Component\Files\Type\File\MediaTypeType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\Files\Entity\Folder, $component.files.generator.folder>
+                - <PersonalGalaxy\X\Component\Files\Entity\File, $component.files.generator.file>
+
+            generator:
+                folder Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Files\Entity\Folder
+                file Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\Files\Entity\File
