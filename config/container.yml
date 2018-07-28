@@ -259,7 +259,7 @@ services:
                 - <PersonalGalaxy\Files\Command\RenameFile, $component.files.handler.file.rename>
                 - <PersonalGalaxy\Files\Command\RestoreFile, $component.files.handler.file.restore>
                 - <PersonalGalaxy\Files\Command\TrashFile, $component.files.handler.file.trash>
-                - <PersonalGalaxy\Files\Command\EmptyTrash, $component.files.handler.emptyTrash>
+                - <PersonalGalaxy\Files\Command\EmptyTrash, $component.files.handler.wrap.emptyTrash>
 
             handler:
                 folder:
@@ -309,6 +309,9 @@ services:
                         remove PersonalGalaxy\X\Component\Files\Handler\RemoveFileHandler:
                             - $component.files.handler.file.remove
                             - $dbal.connection
+                    emptyTrash PersonalGalaxy\X\Component\Files\Handler\EmptyTrashHandler:
+                        - $component.files.handler.emptyTrash
+                        - $dbal.connection
 
             listeners map<string, Innmind\Immutable\SetInterface>:
                 - <PersonalGalaxy\Files\Event\FolderWasAdded, $component.files.listeners.folderWasAdded>
