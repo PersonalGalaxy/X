@@ -87,17 +87,20 @@ services:
 
             types set<string>:
                 - Innmind\Neo4j\ONM\Type\PointInTimeType
+                - PersonalGalaxy\X\Type\UrlType
 
             additionalTypes merge:
                 - $component.identity.additionalTypes
                 - $component.calendar.additionalTypes
                 - $component.files.additionalTypes
+                - $component.rss.additionalTypes
                 - $infrastructure.neo4j.types
 
             additionalGenerators merge:
                 - $component.identity.additionalGenerators
                 - $component.calendar.additionalGenerators
                 - $component.files.additionalGenerators
+                - $component.rss.additionalGenerators
 
         files:
             storage Innmind\Filesystem\Adapter\HashedNameAdapter:
@@ -375,6 +378,25 @@ services:
                     - PersonalGalaxy\X\Component\Files\Entity\File
 
         rss:
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\RSS\Type\Article\AuthorType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\DescriptionType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\TitleType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\SubscriptionType
+                - PersonalGalaxy\X\Component\RSS\Type\Subscription\NameType
+                - PersonalGalaxy\X\Component\RSS\Type\Subscription\UserType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\RSS\Entity\Subscription, $component.rss.generator.subscription>
+                - <PersonalGalaxy\X\Component\RSS\Entity\Article, $component.rss.generator.article>
+
+            generator:
+                subscription Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\RSS\Entity\Subscription
+                article PersonalGalaxy\X\Component\RSS\Generator\ArticleGenerator: []
+
+            urlFactory PersonalGalaxy\X\Component\RSS\UrlFactory: []
+
             crawler Innmind\Crawler\Crawler\Crawler:
                 - $transport.conservative
                 - $component.rss.parser
@@ -387,6 +409,8 @@ services:
                 rss PersonalGalaxy\RSS\Parser\RSS:
                     - $xml.reader
                     - $infrastructure.clock
+                    - $component.rss.urlFactory
                 atom PersonalGalaxy\RSS\Parser\Atom:
                     - $xml.reader
                     - $infrastructure.clock
+                    - $component.rss.urlFactory
