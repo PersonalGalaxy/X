@@ -5,8 +5,9 @@ namespace PersonalGalaxy\X\Component\Identity\Entity;
 
 use PersonalGalaxy\Identity\Entity\Identity\Identity as IdentityInterface;
 use PersonalGalaxy\Calendar\Entity\Agenda\User;
+use PersonalGalaxy\RSS\Entity\Subscription\User as Subscription;
 use Innmind\Neo4j\ONM\Identity\Uuid;
 
-final class Identity extends Uuid implements IdentityInterface, User
+final class Identity extends Uuid implements IdentityInterface, User, Subscription
 {
 }

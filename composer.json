@@ -26,7 +26,8 @@
         "symfony/yaml": "^4.0",
         "symfony/dotenv": "^4.1",
         "personal-galaxy/calendar": "^1.0",
-        "personal-galaxy/files": "^1.0"
+        "personal-galaxy/files": "^1.0",
+        "personal-galaxy/rss": "^1.0"
     },
     "autoload": {
         "psr-4": {

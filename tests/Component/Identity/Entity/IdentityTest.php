@@ -6,6 +6,7 @@ namespace Tests\PersonalGalaxy\X\Component\Identity\Entity;
 use PersonalGalaxy\X\Component\Identity\Entity\Identity;
 use PersonalGalaxy\Identity\Entity\Identity\Identity as IdentityInterface;
 use PersonalGalaxy\Calendar\Entity\Agenda\User;
+use PersonalGalaxy\RSS\Entity\Subscription\User as Subscription;
 use Innmind\Neo4j\ONM\Identity\Uuid;
 use PHPUnit\Framework\TestCase;
 
@@ -18,5 +19,6 @@ class IdentityTest extends TestCase
         $this->assertInstanceOf(Uuid::class, $identity);
         $this->assertInstanceOf(IdentityInterface::class, $identity);
         $this->assertInstanceOf(User::class, $identity);
+        $this->assertInstanceOf(Subscription::class, $identity);
     }
 }

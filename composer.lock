@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5964c5abf6a15f3d4247c54133b8d1a6",
+    "content-hash": "30a9e450a24313af07f7604cba21a460",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -283,6 +283,50 @@
             "time": "2018-07-21T12:25:03+00:00"
         },
         {
+            "name": "innmind/colour",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Colour.git",
+                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Colour/zipball/955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
+                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~2.0",
+                "php": "~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Colour\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Handle colours strictly",
+            "homepage": "http://github.com/Innmind/Colour",
+            "keywords": [
+                "colour"
+            ],
+            "time": "2017-02-12T14:18:07+00:00"
+        },
+        {
             "name": "innmind/command-bus",
             "version": "2.1.0",
             "source": {
@@ -400,6 +444,60 @@
             "time": "2018-04-25T06:02:12+00:00"
         },
         {
+            "name": "innmind/crawler",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Crawler.git",
+                "reference": "763a8bddc09f68a50dfdd7afa16f42926175bdf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/763a8bddc09f68a50dfdd7afa16f42926175bdf0",
+                "reference": "763a8bddc09f68a50dfdd7afa16f42926175bdf0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "innmind/colour": "~2.0",
+                "innmind/compose": "^1.0",
+                "innmind/filesystem": "~3.0",
+                "innmind/html": "~3.0",
+                "innmind/http": "~3.0",
+                "innmind/http-transport": "~3.0",
+                "innmind/immutable": "~2.1",
+                "innmind/math": "~4.0",
+                "innmind/time-continuum": "^1.0",
+                "innmind/url-resolver": "~3.0",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Crawler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to extract meaningful informations out of a webpage",
+            "homepage": "http://github.com/Innmind/Crawler",
+            "keywords": [
+                "crawler"
+            ],
+            "time": "2018-02-11T15:42:21+00:00"
+        },
+        {
             "name": "innmind/event-bus",
             "version": "2.1.0",
             "source": {
@@ -492,6 +590,53 @@
                 "filesystem"
             ],
             "time": "2018-04-02T14:40:49+00:00"
+        },
+        {
+            "name": "innmind/html",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Html.git",
+                "reference": "04ce46bc38dc8db9b37842ddc9e02d330d24c094"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Html/zipball/04ce46bc38dc8db9b37842ddc9e02d330d24c094",
+                "reference": "04ce46bc38dc8db9b37842ddc9e02d330d24c094",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/compose": "^1.0",
+                "innmind/url": "~2.0",
+                "innmind/xml": "~4.0",
+                "php": "~7.2",
+                "symfony/dom-crawler": "^3.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Html\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to abstract html manipulation",
+            "homepage": "http://github.com/Innmind/Html",
+            "keywords": [
+                "html"
+            ],
+            "time": "2018-02-12T07:40:47+00:00"
         },
         {
             "name": "innmind/http",
@@ -636,6 +781,53 @@
                 "wrapper"
             ],
             "time": "2018-02-25T11:18:49+00:00"
+        },
+        {
+            "name": "innmind/math",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Math.git",
+                "reference": "ccf044bf467dd17fc6a1d853e3c494eec2fedfff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Math/zipball/ccf044bf467dd17fc6a1d853e3c494eec2fedfff",
+                "reference": "ccf044bf467dd17fc6a1d853e3c494eec2fedfff",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~2.3",
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Math\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library holding a set of math functions",
+            "homepage": "http://github.com/Innmind/Math",
+            "keywords": [
+                "math"
+            ],
+            "time": "2017-12-10T12:08:52+00:00"
         },
         {
             "name": "innmind/neo4j-dbal",
@@ -1013,6 +1205,52 @@
                 "url"
             ],
             "time": "2018-02-15T11:06:26+00:00"
+        },
+        {
+            "name": "innmind/xml",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/XML.git",
+                "reference": "01071d083550fad1b5c6d0f10b03d345101b9f0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/XML/zipball/01071d083550fad1b5c6d0f10b03d345101b9f0e",
+                "reference": "01071d083550fad1b5c6d0f10b03d345101b9f0e",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/compose": "^1.0",
+                "innmind/immutable": "~2.0",
+                "innmind/stream": "^1.3",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Xml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to abstract xml manipulation",
+            "homepage": "http://github.com/Innmind/XML",
+            "keywords": [
+                "xml"
+            ],
+            "time": "2018-02-12T07:10:18+00:00"
         },
         {
             "name": "league/uri",
@@ -1790,6 +2028,57 @@
             "time": "2018-07-21T13:56:58+00:00"
         },
         {
+            "name": "personal-galaxy/rss",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PersonalGalaxy/RSS.git",
+                "reference": "03a1a86a0a06504fab1479c6339133f9bbcfe2ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PersonalGalaxy/RSS/zipball/03a1a86a0a06504fab1479c6339133f9bbcfe2ea",
+                "reference": "03a1a86a0a06504fab1479c6339133f9bbcfe2ea",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/crawler": "^4.1",
+                "innmind/event-bus": "^2.1",
+                "innmind/immutable": "^2.8",
+                "innmind/specification": "^1.0",
+                "innmind/time-continuum": "^1.1",
+                "innmind/url": "^2.0",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.9.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PersonalGalaxy\\RSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "RSS Reader",
+            "homepage": "http://github.com/PersonalGalaxy/RSS",
+            "keywords": [
+                "reader",
+                "rss"
+            ],
+            "time": "2018-07-28T12:09:29+00:00"
+        },
+        {
             "name": "psr/container",
             "version": "1.0.0",
             "source": {
@@ -2129,6 +2418,63 @@
             "time": "2018-06-20T11:15:17+00:00"
         },
         {
+            "name": "symfony/dom-crawler",
+            "version": "v3.4.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "54c9e817b74c7be1840344bf4feaa7a7d02abfb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/54c9e817b74c7be1840344bf4feaa7a7d02abfb8",
+                "reference": "54c9e817b74c7be1840344bf4feaa7a7d02abfb8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~2.8|~3.0|~4.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2018-07-05T11:53:23+00:00"
+        },
+        {
             "name": "symfony/dotenv",
             "version": "v4.1.1",
             "source": {
@@ -2394,6 +2740,65 @@
             "time": "2018-04-30T19:57:29+00:00"
         },
         {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "3296adf6a6454a050679cde90f95350ad604b171"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/3296adf6a6454a050679cde90f95350ad604b171",
+                "reference": "3296adf6a6454a050679cde90f95350ad604b171",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2018-04-26T10:06:28+00:00"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v4.1.1",
             "source": {
@@ -2563,50 +2968,6 @@
             ],
             "description": "PHP library for property-based testing. Integrates with PHPUnit.",
             "time": "2018-03-23T21:09:07+00:00"
-        },
-        {
-            "name": "innmind/colour",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/Colour.git",
-                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Colour/zipball/955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
-                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/immutable": "~2.0",
-                "php": "~7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\Colour\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Handle colours strictly",
-            "homepage": "http://github.com/Innmind/Colour",
-            "keywords": [
-                "colour"
-            ],
-            "time": "2017-02-12T14:18:07+00:00"
         },
         {
             "name": "innmind/graphviz",
@@ -4113,65 +4474,6 @@
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
             "time": "2018-05-31T10:17:53+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "3296adf6a6454a050679cde90f95350ad604b171"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/3296adf6a6454a050679cde90f95350ad604b171",
-                "reference": "3296adf6a6454a050679cde90f95350ad604b171",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.8-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/process",

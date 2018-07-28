@@ -27,6 +27,8 @@ dependencies:
     eventBus @innmind/event-bus/container.yml:
         listeners: $listeners
 
+    xml @innmind/xml/container.yml: []
+
 expose:
     commands: $commands
 
@@ -64,11 +66,13 @@ services:
         - $component.identity.handlers
         - $component.calendar.handlers
         - $component.files.handlers
+        - $component.rss.handlers
 
     listeners merge:
         - $component.identity.listeners
         - $component.calendar.listeners
         - $component.files.listeners
+        - $component.rss.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -85,17 +89,20 @@ services:
 
             types set<string>:
                 - Innmind\Neo4j\ONM\Type\PointInTimeType
+                - PersonalGalaxy\X\Type\UrlType
 
             additionalTypes merge:
                 - $component.identity.additionalTypes
                 - $component.calendar.additionalTypes
                 - $component.files.additionalTypes
+                - $component.rss.additionalTypes
                 - $infrastructure.neo4j.types
 
             additionalGenerators merge:
                 - $component.identity.additionalGenerators
                 - $component.calendar.additionalGenerators
                 - $component.files.additionalGenerators
+                - $component.rss.additionalGenerators
 
         files:
             storage Innmind\Filesystem\Adapter\HashedNameAdapter:
@@ -371,3 +378,94 @@ services:
                     - PersonalGalaxy\X\Component\Files\Entity\Folder
                 file Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
                     - PersonalGalaxy\X\Component\Files\Entity\File
+
+        rss:
+            handlers map<string, callable>:
+                - <PersonalGalaxy\RSS\Command\AddSubscription, $component.rss.handler.subscription.add>
+                - <PersonalGalaxy\RSS\Command\FetchSubscription, $component.rss.handler.subscription.fetch>
+                - <PersonalGalaxy\RSS\Command\RemoveSubscription, $component.rss.handler.wrap.subscription.remove>
+                - <PersonalGalaxy\RSS\Command\MarkArticleAsRead, $component.rss.handler.article.markAsRead>
+
+            handler:
+                subscription:
+                    add PersonalGalaxy\RSS\Handler\AddSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                    fetch PersonalGalaxy\RSS\Handler\FetchSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                        - $component.rss.repository.article
+                        - $component.rss.crawler
+                    remove PersonalGalaxy\RSS\Handler\RemoveSubscriptionHandler:
+                        - $component.rss.repository.subscription
+                article:
+                    markAsRead PersonalGalaxy\RSS\Handler\MarkArticleAsReadHandler:
+                        - $component.rss.repository.article
+                wrap:
+                    subscription:
+                        remove PersonalGalaxy\X\Component\RSS\Handler\RemoveSubscriptionHandler:
+                            - $component.rss.handler.subscription.remove
+                            - $dbal.connection
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\RSS\Event\SubscriptionWasAdded, $component.rss.listeners.subscriptionWasAdded>
+                - <PersonalGalaxy\RSS\Event\ArticleWasFetched, $component.rss.listeners.articleWasFetched>
+
+            listeners:
+                subscriptionWasAdded set<callable>:
+                    - $component.rss.listener.bindSubscriptionToIdentity
+                articleWasFetched set<callable>:
+                    - $component.rss.listener.bindArticleToSubscription
+
+            listener:
+                bindSubscriptionToIdentity PersonalGalaxy\X\Component\RSS\Listener\BindSubscriptionToIdentity:
+                    - $dbal.connection
+                bindArticleToSubscription PersonalGalaxy\X\Component\RSS\Listener\BindArticleToSubscription:
+                    - $component.rss.repository.article
+                    - $dbal.connection
+
+            repository:
+                subscription PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\RSS\Repository\SubscriptionRepository
+                    - PersonalGalaxy\RSS\Entity\Subscription
+
+                article PersonalGalaxy\X\Repository::build:
+                    - $neo4j.manager
+                    - PersonalGalaxy\X\Component\RSS\Repository\ArticleRepository
+                    - PersonalGalaxy\RSS\Entity\Article
+
+            additionalTypes set<string>:
+                - PersonalGalaxy\X\Component\RSS\Type\Article\AuthorType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\DescriptionType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\TitleType
+                - PersonalGalaxy\X\Component\RSS\Type\Article\SubscriptionType
+                - PersonalGalaxy\X\Component\RSS\Type\Subscription\NameType
+                - PersonalGalaxy\X\Component\RSS\Type\Subscription\UserType
+
+            additionalGenerators map<string, Innmind\Neo4j\ONM\Identity\Generator>:
+                - <PersonalGalaxy\X\Component\RSS\Entity\Subscription, $component.rss.generator.subscription>
+                - <PersonalGalaxy\X\Component\RSS\Entity\Article, $component.rss.generator.article>
+
+            generator:
+                subscription Innmind\Neo4j\ONM\Identity\Generator\UuidGenerator:
+                    - PersonalGalaxy\X\Component\RSS\Entity\Subscription
+                article PersonalGalaxy\X\Component\RSS\Generator\ArticleGenerator: []
+
+            urlFactory PersonalGalaxy\X\Component\RSS\UrlFactory: []
+
+            crawler Innmind\Crawler\Crawler\Crawler:
+                - $transport.conservative
+                - $component.rss.parser
+
+            parser Innmind\Crawler\Parser\SequenceParser:
+                - $component.rss.parser.rss
+                - $component.rss.parser.atom
+
+            parser:
+                rss PersonalGalaxy\RSS\Parser\RSS:
+                    - $xml.reader
+                    - $infrastructure.clock
+                    - $component.rss.urlFactory
+                atom PersonalGalaxy\RSS\Parser\Atom:
+                    - $xml.reader
+                    - $infrastructure.clock
+                    - $component.rss.urlFactory

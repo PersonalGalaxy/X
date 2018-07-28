@@ -75,3 +75,37 @@ PersonalGalaxy\Files\Entity\File:
             type: files_file_media_type
         trashed:
             type: bool
+
+PersonalGalaxy\RSS\Entity\Subscription:
+    type: aggregate
+    labels: ['RSS', 'Subscription']
+    identity:
+        property: identity
+        type: PersonalGalaxy\X\Component\RSS\Entity\Subscription
+    properties:
+        user:
+            type: rss_subscription_user
+        name:
+            type: rss_subscription_name
+        location:
+            type: url
+
+PersonalGalaxy\RSS\Entity\Article:
+    type: aggregate
+    labels: ['RSS', 'Article']
+    identity:
+        property: link
+        type: PersonalGalaxy\X\Component\Entity\Article
+    properties:
+        author:
+            type: rss_article_author
+        description:
+            type: rss_article_description
+        title:
+            type: rss_article_title
+        publicationDate:
+            type: point_in_time
+        subscription:
+            type: rss_article_subscription
+        read:
+            type: bool
