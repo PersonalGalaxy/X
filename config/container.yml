@@ -4,6 +4,8 @@ arguments:
     filesStoragePath: string
 
 dependencies:
+    xml @innmind/xml/container.yml: []
+
     transport @innmind/http-transport/container.yml: []
 
     dbal @innmind/neo4j-dbal/container.yml:
@@ -26,8 +28,6 @@ dependencies:
 
     eventBus @innmind/event-bus/container.yml:
         listeners: $listeners
-
-    xml @innmind/xml/container.yml: []
 
 expose:
     commands: $commands
