@@ -639,16 +639,16 @@
         },
         {
             "name": "innmind/neo4j-dbal",
-            "version": "4.1.0",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/neo4j-dbal.git",
-                "reference": "1c4f02572c9b621184c82a03eb1b1e303665b2c5"
+                "reference": "be4c7e7c550237002d4ad404ae8b0f2807f0d512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/neo4j-dbal/zipball/1c4f02572c9b621184c82a03eb1b1e303665b2c5",
-                "reference": "1c4f02572c9b621184c82a03eb1b1e303665b2c5",
+                "url": "https://api.github.com/repos/Innmind/neo4j-dbal/zipball/be4c7e7c550237002d4ad404ae8b0f2807f0d512",
+                "reference": "be4c7e7c550237002d4ad404ae8b0f2807f0d512",
                 "shasum": ""
             },
             "require": {
@@ -660,6 +660,7 @@
                 "psr/log": "^1.0"
             },
             "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
                 "phpunit/phpunit": "~6.0"
             },
             "type": "library",
@@ -684,7 +685,7 @@
                 "neo4j",
                 "wrapper"
             ],
-            "time": "2018-02-11T13:48:44+00:00"
+            "time": "2018-07-27T18:44:17+00:00"
         },
         {
             "name": "innmind/neo4j-onm",

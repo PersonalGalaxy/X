@@ -249,7 +249,7 @@ services:
             handlers map<string, callable>:
                 - <PersonalGalaxy\Files\Command\AddFolder, $component.files.handler.folder.add>
                 - <PersonalGalaxy\Files\Command\MoveFolder, $component.files.handler.folder.move>
-                - <PersonalGalaxy\Files\Command\RemoveFolder, $component.files.handler.folder.remove>
+                - <PersonalGalaxy\Files\Command\RemoveFolder, $component.files.handler.wrap.folder.remove>
                 - <PersonalGalaxy\Files\Command\RenameFolder, $component.files.handler.folder.rename>
                 - <PersonalGalaxy\Files\Command\RestoreFolder, $component.files.handler.folder.restore>
                 - <PersonalGalaxy\Files\Command\TrashFolder, $component.files.handler.folder.trash>
@@ -301,6 +301,10 @@ services:
                     - $component.files.handler.folder.remove
 
                 wrap:
+                    folder:
+                        remove PersonalGalaxy\X\Component\Files\Handler\RemoveFolderHandler:
+                            - $component.files.handler.folder.remove
+                            - $dbal.connection
                     file:
                         remove PersonalGalaxy\X\Component\Files\Handler\RemoveFileHandler:
                             - $component.files.handler.file.remove
