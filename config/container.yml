@@ -318,6 +318,7 @@ services:
                 - <PersonalGalaxy\Files\Event\FolderWasMovedToADifferentFolder, $component.files.listeners.folderWasMovedToADifferentFolder>
                 - <PersonalGalaxy\Files\Event\FileWasAdded, $component.files.listeners.fileWasAdded>
                 - <PersonalGalaxy\Files\Event\FileWasMovedToADifferentFolder, $component.files.listeners.fileWasMovedToADifferentFolder>
+                - <PersonalGalaxy\Identity\Event\IdentityWasCreated, $component.files.listeners.identityWasCreated>
 
             listeners:
                 folderWasAdded set<callable>:
@@ -328,6 +329,8 @@ services:
                     - $component.files.listener.bindFileToFolder
                 fileWasMovedToADifferentFolder set<callable>:
                     - $component.files.listener.bindFileToNewFolder
+                identityWasCreated set<callable>:
+                    - $component.files.listener.createRootFolder
 
             listener:
                 bindFolderToParent PersonalGalaxy\X\Component\Files\Listener\BindFolderToParent:
@@ -338,6 +341,9 @@ services:
                     - $dbal.connection
                 bindFileToNewFolder PersonalGalaxy\X\Component\Files\Listener\BindFileToNewFolder:
                     - $dbal.connection
+                createRootFolder PersonalGalaxy\X\Component\Files\Listener\CreateRootFolder:
+                    - $dbal.connection
+                    - $neo4j.manager
 
             repository:
                 folder PersonalGalaxy\X\Repository::build:
