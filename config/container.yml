@@ -72,6 +72,7 @@ services:
         - $component.identity.listeners
         - $component.calendar.listeners
         - $component.files.listeners
+        - $component.rss.listeners
 
     infrastructure:
         clock Innmind\TimeContinuum\TimeContinuum\Earth:
@@ -398,6 +399,23 @@ services:
                 article:
                     markAsRead PersonalGalaxy\RSS\Handler\MarkArticleAsReadHandler:
                         - $component.rss.repository.article
+
+            listeners map<string, Innmind\Immutable\SetInterface>:
+                - <PersonalGalaxy\RSS\Event\SubscriptionWasAdded, $component.rss.listeners.subscriptionWasAdded>
+                - <PersonalGalaxy\RSS\Event\ArticleWasFetched, $component.rss.listeners.articleWasFetched>
+
+            listeners:
+                subscriptionWasAdded set<callable>:
+                    - $component.rss.listener.bindSubscriptionToIdentity
+                articleWasFetched set<callable>:
+                    - $component.rss.listener.bindArticleToSubscription
+
+            listener:
+                bindSubscriptionToIdentity PersonalGalaxy\X\Component\RSS\Listener\BindSubscriptionToIdentity:
+                    - $dbal.connection
+                bindArticleToSubscription PersonalGalaxy\X\Component\RSS\Listener\BindArticleToSubscription:
+                    - $component.rss.repository.article
+                    - $dbal.connection
 
             repository:
                 subscription PersonalGalaxy\X\Repository::build:
