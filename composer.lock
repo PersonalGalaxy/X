@@ -377,16 +377,16 @@
         },
         {
             "name": "innmind/compose",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Compose.git",
-                "reference": "a5c4b8ec080f47892abac0d8953c406275fa9297"
+                "reference": "28cb8bb9a234c99d252fa851fdbc9d7129eae645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Compose/zipball/a5c4b8ec080f47892abac0d8953c406275fa9297",
-                "reference": "a5c4b8ec080f47892abac0d8953c406275fa9297",
+                "url": "https://api.github.com/repos/Innmind/Compose/zipball/28cb8bb9a234c99d252fa851fdbc9d7129eae645",
+                "reference": "28cb8bb9a234c99d252fa851fdbc9d7129eae645",
                 "shasum": ""
             },
             "require": {
@@ -441,7 +441,7 @@
                 "locator",
                 "service"
             ],
-            "time": "2018-07-28T14:16:02+00:00"
+            "time": "2018-07-28T16:13:18+00:00"
         },
         {
             "name": "innmind/crawler",
@@ -831,16 +831,16 @@
         },
         {
             "name": "innmind/neo4j-dbal",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/neo4j-dbal.git",
-                "reference": "be4c7e7c550237002d4ad404ae8b0f2807f0d512"
+                "reference": "2ab748a65b23d432092c92db94f39b34e0a21de5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/neo4j-dbal/zipball/be4c7e7c550237002d4ad404ae8b0f2807f0d512",
-                "reference": "be4c7e7c550237002d4ad404ae8b0f2807f0d512",
+                "url": "https://api.github.com/repos/Innmind/neo4j-dbal/zipball/2ab748a65b23d432092c92db94f39b34e0a21de5",
+                "reference": "2ab748a65b23d432092c92db94f39b34e0a21de5",
                 "shasum": ""
             },
             "require": {
@@ -877,7 +877,7 @@
                 "neo4j",
                 "wrapper"
             ],
-            "time": "2018-07-27T18:44:17+00:00"
+            "time": "2018-07-28T14:38:59+00:00"
         },
         {
             "name": "innmind/neo4j-onm",
@@ -2356,7 +2356,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -2476,7 +2476,7 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
@@ -2533,7 +2533,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2583,7 +2583,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -2632,16 +2632,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "45cdcc8a96ef92b43a50723e6d1f5f83096e8cef"
+                "reference": "0aec9f9c5d2447ae7ea5ea31bc82f1d43f9a8a56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/45cdcc8a96ef92b43a50723e6d1f5f83096e8cef",
-                "reference": "45cdcc8a96ef92b43a50723e6d1f5f83096e8cef",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/0aec9f9c5d2447ae7ea5ea31bc82f1d43f9a8a56",
+                "reference": "0aec9f9c5d2447ae7ea5ea31bc82f1d43f9a8a56",
                 "shasum": ""
             },
             "require": {
@@ -2682,7 +2682,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2018-05-31T10:17:53+00:00"
+            "time": "2018-07-07T16:00:36+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2800,7 +2800,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -4409,16 +4409,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "70591cda56b4b47c55776ac78e157c4bb6c8b43f"
+                "reference": "5c31f6a97c1c240707f6d786e7e59bfacdbc0219"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/70591cda56b4b47c55776ac78e157c4bb6c8b43f",
-                "reference": "70591cda56b4b47c55776ac78e157c4bb6c8b43f",
+                "url": "https://api.github.com/repos/symfony/console/zipball/5c31f6a97c1c240707f6d786e7e59bfacdbc0219",
+                "reference": "5c31f6a97c1c240707f6d786e7e59bfacdbc0219",
                 "shasum": ""
             },
             "require": {
@@ -4473,7 +4473,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-05-31T10:17:53+00:00"
+            "time": "2018-07-16T14:05:40+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
@@ -4532,7 +4532,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
