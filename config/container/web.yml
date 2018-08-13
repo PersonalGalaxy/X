@@ -1,0 +1,44 @@
+arguments:
+    routes: set<Innmind\Url\PathInterface>
+    templates: Innmind\Url\PathInterface
+    metas: array
+    neo4jPassword: string
+    filesStoragePath: string
+    debug: bool
+
+dependencies:
+    framework @innmind/http-framework/container.yml:
+        routes: $routes
+        controllers: $controllers
+
+    authentication @innmind/http-authentication/container.yml: []
+
+    templating @innmind/templating/container.yml:
+        templates: $templates
+
+    app app.yml:
+        metas: $metas
+        neo4jPassword: $neo4jPassword
+        filesStoragePath: $filesStoragePath
+
+expose:
+    requestHandler: $requestHandler
+
+services:
+    requestHandler stack:
+        - $requestHandler.debug
+        # - $framework.enforceHttps
+        # - $framework.authenticate
+        - $framework.router
+
+    requestHandler:
+        debug PersonalGalaxy\X\Web\RequestHandler\Debug:
+            - '@decorated'
+            - $debug
+
+    controllers map<string, Innmind\HttpFramework\Controller>:
+        - <index, $controllers.hello>
+
+    controllers:
+        hello PersonalGalaxy\X\Web\Controller\Hello:
+            - $templating.engine

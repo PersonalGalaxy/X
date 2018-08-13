@@ -27,7 +27,11 @@
         "symfony/dotenv": "^4.1",
         "personal-galaxy/calendar": "^1.0",
         "personal-galaxy/files": "^1.0",
-        "personal-galaxy/rss": "^1.0"
+        "personal-galaxy/rss": "^1.0",
+        "innmind/http": "^3.7",
+        "innmind/http-server": "^1.1",
+        "innmind/http-framework": "^1.0",
+        "innmind/templating": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -46,7 +50,8 @@
         "mnapoli/silly": "^1.7",
         "innmind/server-control": "^2.4",
         "innmind/graphviz": "^1.0",
-        "symfony/var-dumper": "^4.1"
+        "symfony/var-dumper": "^4.1",
+        "filp/whoops": "^2.2"
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always"
