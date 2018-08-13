@@ -31,6 +31,7 @@ dependencies:
 
 expose:
     commands: $commands
+    commandBus: $appCommandBus
 
 services:
     commands Innmind\CLI\Commands:

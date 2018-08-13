@@ -19,7 +19,7 @@ new class extends Main {
     {
         $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
         $container = (new ContainerBuilder)(
-            new Path(__DIR__.'/../config/container.yml'),
+            new Path(__DIR__.'/../config/container/app.yml'),
             (new Map('string', 'mixed'))
                 ->put('metas', [Yaml::parseFile(__DIR__.'/../config/neo4j/entities.yml')])
                 ->put('neo4jPassword', $dotenv['NEO4J_PASSWORD'] ?? 'neo4j')
