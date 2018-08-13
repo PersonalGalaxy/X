@@ -640,16 +640,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "3.7.2",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "bb9c8772c2b0961f56c8f7a79214ee49549ac90f"
+                "reference": "4f23a24de5e65fd97a349a68d147096bd7d45dee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/bb9c8772c2b0961f56c8f7a79214ee49549ac90f",
-                "reference": "bb9c8772c2b0961f56c8f7a79214ee49549ac90f",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/4f23a24de5e65fd97a349a68d147096bd7d45dee",
+                "reference": "4f23a24de5e65fd97a349a68d147096bd7d45dee",
                 "shasum": ""
             },
             "require": {
@@ -687,7 +687,7 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2018-08-12T14:26:55+00:00"
+            "time": "2018-08-13T15:56:19+00:00"
         },
         {
             "name": "innmind/http-authentication",
@@ -741,21 +741,21 @@
         },
         {
             "name": "innmind/http-framework",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpFramework.git",
-                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e"
+                "reference": "bfdd10d61b4d664f3fe363f994d0f219618d1946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
-                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
+                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/bfdd10d61b4d664f3fe363f994d0f219618d1946",
+                "reference": "bfdd10d61b4d664f3fe363f994d0f219618d1946",
                 "shasum": ""
             },
             "require": {
                 "innmind/compose": "^1.7",
-                "innmind/http": "^3.6",
+                "innmind/http": "^3.8",
                 "innmind/http-authentication": "^1.1",
                 "innmind/router": "^1.0",
                 "php": "~7.2",
@@ -790,7 +790,7 @@
                 "framework",
                 "http"
             ],
-            "time": "2018-08-13T06:35:59+00:00"
+            "time": "2018-08-13T16:06:20+00:00"
         },
         {
             "name": "innmind/http-server",
