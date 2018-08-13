@@ -14,18 +14,15 @@ use Innmind\Templating\{
     Engine,
     Name,
 };
-use Innmind\Immutable\{
-    MapInterface,
-    Map,
-};
+use Innmind\Immutable\MapInterface;
 
-final class Hello implements Controller
+final class Index implements Controller
 {
     private $render;
 
-    public function __construct(Engine $engine)
+    public function __construct(Engine $render)
     {
-        $this->render = $engine;
+        $this->render = $render;
     }
 
     public function __invoke(
@@ -38,11 +35,7 @@ final class Hello implements Controller
             $code->associatedReasonPhrase(),
             $request->protocolVersion(),
             null,
-            ($this->render)(
-                new Name('hello.html.twig'),
-                (new Map('string', 'mixed'))
-                    ->put('name', 'world')
-            )
+            ($this->render)(new Name('index.html.twig'))
         );
     }
 }

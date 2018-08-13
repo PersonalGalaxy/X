@@ -3,19 +3,19 @@ declare(strict_types = 1);
 
 namespace Tests\PersonalGalaxy\X\Web\Controller;
 
-use PersonalGalaxy\X\Web\Controller\Hello;
+use PersonalGalaxy\X\Web\Controller\Index;
 use Innmind\HttpFramework\Controller;
 use Innmind\Http\Message\Response;
 use Innmind\Templating\Engine;
 use Tests\PersonalGalaxy\X\Web\TestCase;
 
-class HelloTest extends TestCase
+class IndexTest extends TestCase
 {
     public function testInterface()
     {
         $this->assertInstanceOf(
             Controller::class,
-            new Hello(
+            new Index(
                 $this->createMock(Engine::class)
             )
         );
@@ -27,6 +27,6 @@ class HelloTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(200, $response->statusCode()->value());
-        $this->assertSame("Hello world!\n", (string) $response->body());
+        $this->assertNotEmpty((string) $response->body());
     }
 }

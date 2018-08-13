@@ -37,8 +37,8 @@ services:
             - $debug
 
     controllers map<string, Innmind\HttpFramework\Controller>:
-        - <index, $controllers.hello>
+        - <index, $controllers.index>
 
     controllers:
-        hello PersonalGalaxy\X\Web\Controller\Hello:
+        index PersonalGalaxy\X\Web\Controller\Index:
             - $templating.engine
