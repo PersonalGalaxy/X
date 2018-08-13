@@ -741,16 +741,16 @@
         },
         {
             "name": "innmind/http-framework",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpFramework.git",
-                "reference": "2e9f6b6a3854ccb1eefcb6c3c314352a5349fcd4"
+                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/2e9f6b6a3854ccb1eefcb6c3c314352a5349fcd4",
-                "reference": "2e9f6b6a3854ccb1eefcb6c3c314352a5349fcd4",
+                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
+                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
                 "shasum": ""
             },
             "require": {
@@ -790,7 +790,7 @@
                 "framework",
                 "http"
             ],
-            "time": "2018-08-11T14:33:37+00:00"
+            "time": "2018-08-13T06:35:59+00:00"
         },
         {
             "name": "innmind/http-server",
