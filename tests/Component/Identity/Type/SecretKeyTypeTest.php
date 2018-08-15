@@ -51,7 +51,7 @@ class SecretKeyTypeTest extends TestCase
         );
         $key = new SecretKey;
 
-        $this->assertSame((string) $key, $type->forDatabase($key));
+        $this->assertSame(bin2hex((string) $key), $type->forDatabase($key));
     }
 
     public function testFromDatabase()
@@ -60,9 +60,9 @@ class SecretKeyTypeTest extends TestCase
             $this->createMock(MapInterface::class),
             new Types
         );
-        $code = \bin2hex(\random_bytes(20));
+        $code = random_bytes(16);
 
-        $this->assertInstanceOf(SecretKey::class, $type->fromDatabase($code));
-        $this->assertSame($code, (string) $type->fromDatabase($code));
+        $this->assertInstanceOf(SecretKey::class, $type->fromDatabase(bin2hex($code)));
+        $this->assertSame($code, (string) $type->fromDatabase(bin2hex($code)));
     }
 }
