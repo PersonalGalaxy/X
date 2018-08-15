@@ -7,34 +7,30 @@ use PersonalGalaxy\X\{
     Component\Identity\Entity\Identity,
     Component\Identity\Query\FindIdentity,
 };
-use Innmind\Neo4j\DBAL\{
-    Connection,
-    Query\Query,
+use PersonalGalaxy\Identity\{
+    Repository\IdentityRepository,
+    Specification\Identity\Email,
 };
 
 final class FindIdentityHandler
 {
-    private $dbal;
+    private $repository;
 
-    public function __construct(Connection $dbal)
+    public function __construct(IdentityRepository $repository)
     {
-        $this->dbal = $dbal;
+        $this->repository = $repository;
     }
 
     public function __invoke(FindIdentity $wished): ?Identity
     {
-        $result = $this->dbal->execute(
-            (new Query)
-                ->match('identity', ['User'])
-                ->withProperty('email', '{email}')
-                ->withParameter('email', (string) $wished->email())
-                ->return('identity.identity as identity')
-        );
+        $identities = $this
+            ->repository
+            ->matching(new Email($wished->email()));
 
-        if ($result->rows()->size() === 0) {
+        if ($identities->size() !== 1) {
             return null;
         }
 
-        return new Identity($result->rows()->current()->value());
+        return $identities->current()->identity();
     }
 }
