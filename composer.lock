@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba43f572a325a524a57896dbd9eb820c",
+    "content-hash": "df2e747367f362bb294fa6ab9233753c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -838,6 +838,53 @@
                 "server"
             ],
             "time": "2018-08-12T14:32:35+00:00"
+        },
+        {
+            "name": "innmind/http-session",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpSession.git",
+                "reference": "914a3716318022468f8e7c0923fc22c6800a973b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpSession/zipball/914a3716318022468f8e7c0923fc22c6800a973b",
+                "reference": "914a3716318022468f8e7c0923fc22c6800a973b",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "^3.7",
+                "innmind/immutable": "^2.8",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpSession\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP session",
+            "homepage": "http://github.com/Innmind/HttpSession",
+            "keywords": [
+                "http",
+                "session"
+            ],
+            "time": "2018-08-12T16:27:52+00:00"
         },
         {
             "name": "innmind/http-transport",
