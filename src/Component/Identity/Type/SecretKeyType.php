@@ -30,7 +30,7 @@ final class SecretKeyType extends AbstractType implements Type
      */
     public function forDatabase($value)
     {
-        return bin2hex((string) $value);
+        return (string) $value;
     }
 
     /**
@@ -40,7 +40,7 @@ final class SecretKeyType extends AbstractType implements Type
     {
         return $this
             ->reflection
-            ->withProperty('value', hex2bin($value))
+            ->withProperty('value', $value)
             ->build();
     }
 
