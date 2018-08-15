@@ -5,13 +5,15 @@ namespace Tests\PersonalGalaxy\X\Web\Authentication;
 
 use PersonalGalaxy\X\{
     Web\Authentication\FormResolver,
-    QueryBus,
-    Component\Identity\Query\FindIdentity,
     Component\Identity\Entity\Identity as Id,
     Web\Exception\UserNotFound,
 };
 use PersonalGalaxy\Identity\{
     Command\Identity\VerifyPassword,
+    Entity\Identity,
+    Entity\Identity\Email,
+    Entity\Identity\Password,
+    Repository\IdentityRepository,
     Exception\InvalidPassword,
 };
 use Innmind\HttpAuthentication\ViaForm\Resolver;
@@ -20,7 +22,10 @@ use Innmind\Http\Message\{
     Form\Form,
     Form\Parameter\Parameter,
 };
-use Innmind\Immutable\Map;
+use Innmind\Immutable\{
+    Map,
+    Set,
+};
 use PHPUnit\Framework\TestCase;
 
 class FormResolverTest extends TestCase
@@ -30,7 +35,7 @@ class FormResolverTest extends TestCase
         $this->assertInstanceOf(
             Resolver::class,
             new FormResolver(
-                new QueryBus(new Map('string', 'callable')),
+                $this->createMock(IdentityRepository::class),
                 $this->createMock(CommandBusInterface::class)
             )
         );
@@ -39,12 +44,13 @@ class FormResolverTest extends TestCase
     public function testUserNotFound()
     {
         $resolve = new FormResolver(
-            new QueryBus(
-                (new Map('string', 'callable'))
-                    ->put(FindIdentity::class, function(){})
-            ),
+            $repository = $this->createMock(IdentityRepository::class),
             $commandBus = $this->createMock(CommandBusInterface::class)
         );
+        $repository
+            ->expects($this->once())
+            ->method('matching')
+            ->willReturn(Set::of(Identity::class));
         $commandBus
             ->expects($this->never())
             ->method('handle');
@@ -62,14 +68,20 @@ class FormResolverTest extends TestCase
     public function testInvalidPassword()
     {
         $resolve = new FormResolver(
-            new QueryBus(
-                (new Map('string', 'callable'))
-                    ->put(FindIdentity::class, function() {
-                        return new Id('037de1af-db12-4f6b-bc8f-ed395fdcfdfe');
-                    })
-            ),
+            $repository = $this->createMock(IdentityRepository::class),
             $commandBus = $this->createMock(CommandBusInterface::class)
         );
+        $repository
+            ->expects($this->once())
+            ->method('matching')
+            ->willReturn(Set::of(
+                Identity::class,
+                Identity::create(
+                    new Id('037de1af-db12-4f6b-bc8f-ed395fdcfdfe'),
+                    new Email('foo@bar.baz'),
+                    new Password('foobarbaz')
+                )
+            ));
         $commandBus
             ->expects($this->once())
             ->method('handle')
@@ -92,14 +104,20 @@ class FormResolverTest extends TestCase
     public function testReturnIdentity()
     {
         $resolve = new FormResolver(
-            new QueryBus(
-                (new Map('string', 'callable'))
-                    ->put(FindIdentity::class, function() {
-                        return new Id('037de1af-db12-4f6b-bc8f-ed395fdcfdfe');
-                    })
-            ),
+            $repository = $this->createMock(IdentityRepository::class),
             $commandBus = $this->createMock(CommandBusInterface::class)
         );
+        $repository
+            ->expects($this->once())
+            ->method('matching')
+            ->willReturn(Set::of(
+                Identity::class,
+                Identity::create(
+                    new Id('037de1af-db12-4f6b-bc8f-ed395fdcfdfe'),
+                    new Email('foo@bar.baz'),
+                    new Password('foobarbaz')
+                )
+            ));
         $commandBus
             ->expects($this->once())
             ->method('handle')

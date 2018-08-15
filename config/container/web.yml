@@ -91,7 +91,7 @@ services:
 
         resolver:
             form PersonalGalaxy\X\Web\Authentication\FormResolver:
-                - $app.queryBus
+                - $app.identityRepository
                 - $app.commandBus
 
         storage:
