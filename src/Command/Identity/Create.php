@@ -27,6 +27,7 @@ use Innmind\CLI\{
 use Innmind\CommandBus\CommandBusInterface;
 use Innmind\Neo4j\ONM\Manager;
 use Innmind\Immutable\Str;
+use ParagonIE\ConstantTime\Encoding;
 
 final class Create implements Command
 {
@@ -76,7 +77,7 @@ final class Create implements Command
 
         if ($options->contains('enable-2fa')) {
             $this->bus->handle(new Enable2FA($id));
-            $key = $this->secretKey->key();
+            $key = Encoding::base32Encode((string) $this->secretKey->key());
             $env->output()->write(Str::of("\nSecret key : $key\n"));
             $env->output()->write(Str::of("\nRecovery codes (to be kept in a safe place) : \n"));
             $this

@@ -44,6 +44,7 @@ use Innmind\Immutable\{
     Str,
     Set
 };
+use ParagonIE\ConstantTime\Encoding;
 use PHPUnit\Framework\TestCase;
 
 class CreateTest extends TestCase
@@ -393,10 +394,11 @@ DESC;
         $output
             ->expects($this->exactly(14))
             ->method('write');
+        $key = Encoding::base32Encode((string) $key->key());
         $output
             ->expects($this->at(2))
             ->method('write')
-            ->with(Str::of("\nSecret key : {$key->key()}\n"));
+            ->with(Str::of("\nSecret key : $key\n"));
         $output
             ->expects($this->at(3))
             ->method('write')

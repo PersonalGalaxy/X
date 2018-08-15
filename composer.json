@@ -32,7 +32,8 @@
         "innmind/http-server": "^1.1",
         "innmind/http-framework": "^1.0",
         "innmind/templating": "^1.0",
-        "innmind/http-session": "^1.0"
+        "innmind/http-session": "^1.0",
+        "paragonie/constant_time_encoding": "^2.2"
     },
     "autoload": {
         "psr-4": {
