@@ -33,6 +33,7 @@ expose:
     commands: $commands
     commandBus: $appCommandBus
     queryBus: $queryBus
+    clock: $infrastructure.clock
 
 services:
     commands Innmind\CLI\Commands:
