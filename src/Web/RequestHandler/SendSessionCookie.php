@@ -56,6 +56,23 @@ final class SendSessionCookie implements RequestHandler
 
         if ($identity instanceof Fresh) {
             $session = $this->manager->get($request);
+            $parameters = [
+                new Parameter(
+                    (string) $session->name(),
+                    (string) $session->id()
+                ),
+                new HttpOnly,
+                SameSite::strict(),
+                new Expires(
+                    Month::forward(3)(
+                        $this->clock->now()
+                    )
+                )
+            ];
+
+            if ((string) $request->url()->scheme() === 'https') {
+                $parameters[] = new Secure;
+            }
 
             return new Response\Response(
                 $code = StatusCode::of('FOUND'),
@@ -67,18 +84,7 @@ final class SendSessionCookie implements RequestHandler
                     ),
                     new SetCookie(
                         new CookieValue(
-                            new Parameter(
-                                (string) $session->name(),
-                                (string) $session->id()
-                            ),
-                            new HttpOnly,
-                            SameSite::strict(),
-                            new Secure,
-                            new Expires(
-                                Month::forward(3)(
-                                    $this->clock->now()
-                                )
-                            )
+                            ...$parameters
                             // Domain not sent to restrict to the current
                             // domain only and not subdomains
                         )

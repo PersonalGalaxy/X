@@ -106,9 +106,9 @@ class SendSessionCookieTest extends TestCase
         );
         $request = $this->createMock(ServerRequest::class);
         $request
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('url')
-            ->willReturn(Url::fromString('/foo/bar'));
+            ->willReturn(Url::fromString('https://localhost/foo/bar'));
         $inner
             ->expects($this->never())
             ->method('__invoke');
@@ -141,11 +141,11 @@ class SendSessionCookieTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(302, $response->statusCode()->value());
         $this->assertSame(
-            'Location : /foo/bar',
+            'Location : https://localhost/foo/bar',
             (string) $response->headers()->get('Location')
         );
         $this->assertSame(
-            'Set-Cookie : bar=foo; HttpOnly; SameSite=Strict; Secure; Expires="Thu, 28 Feb 2019 12:13:14 +0100"',
+            'Set-Cookie : bar=foo; HttpOnly; SameSite=Strict; Expires="Thu, 28 Feb 2019 12:13:14 +0100"; Secure',
             (string) $response->headers()->get('Set-Cookie')
         );
     }
