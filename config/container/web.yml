@@ -7,19 +7,23 @@ arguments:
     debug: bool
 
 dependencies:
-    framework @innmind/http-framework/container.yml:
-        routes: $routes
-        controllers: $controllers
-
-    authentication @innmind/http-authentication/container.yml: []
-
-    templating @innmind/templating/container.yml:
-        templates: $templates
-
     app app.yml:
         metas: $metas
         neo4jPassword: $neo4jPassword
         filesStoragePath: $filesStoragePath
+
+    authentication @innmind/http-authentication/container.yml:
+        formResolver: $authentication.resolver.form
+
+    templating @innmind/templating/container.yml:
+        templates: $templates
+
+    framework @innmind/http-framework/container.yml:
+        routes: $routes
+        controllers: $controllers
+        authenticator: $authentication.authenticatorStack
+        authenticationFallbacks: $authentication.fallbacks
+        routePatternToAuthenticate: '~^/~'
 
 expose:
     requestHandler: $requestHandler
@@ -27,8 +31,10 @@ expose:
 services:
     requestHandler stack:
         - $requestHandler.debug
+        - $requestHandler.saveSession
         # - $framework.enforceHttps
-        # - $framework.authenticate
+        - $framework.authenticate
+        - $requestHandler.sendSessionCookie
         - $framework.router
 
     requestHandler:
@@ -36,9 +42,59 @@ services:
             - '@decorated'
             - $debug
 
+        saveSession PersonalGalaxy\X\Web\RequestHandler\SaveSession:
+            - '@decorated'
+            - $sessionManager
+
+        sendSessionCookie PersonalGalaxy\X\Web\RequestHandler\SendSessionCookie:
+            - '@decorated'
+            - $authentication.storage.memory
+            - $sessionManager
+            - $app.clock
+
     controllers map<string, Innmind\HttpFramework\Controller>:
         - <index, $controllers.index>
+        - <logout, $controllers.logout>
 
     controllers:
         index PersonalGalaxy\X\Web\Controller\Index:
             - $templating.engine
+
+        logout PersonalGalaxy\X\Web\Controller\Logout:
+            - $sessionManager
+            - $framework.urlGenerator
+            - $app.clock
+
+    authentication:
+        authenticatorStack stack:
+            - $authentication.authenticator.storage
+            - $authentication.authenticator.session
+            - $authentication.authenticator
+
+        authenticator:
+            session PersonalGalaxy\X\Web\Authentication\ViaSession:
+                - '@decorated'
+                - $sessionManager
+
+            storage Innmind\HttpAuthentication\ViaStorage:
+                - '@decorated'
+                - $authentication.storage.memory
+
+        fallbacks map<string, Innmind\HttpFramework\Authenticate\Fallback>:
+            - <Innmind\HttpAuthentication\Exception\NoAuthenticationProvided, $authentication.fallbacks.login>
+            - <PersonalGalaxy\X\Web\Exception\UserNotFound, $authentication.fallbacks.login>
+            - <PersonalGalaxy\Identity\Exception\InvalidPassword, $authentication.fallbacks.login>
+
+        fallbacks:
+            login PersonalGalaxy\X\Web\Authentication\Fallback\Login:
+                - $templating.engine
+
+        resolver:
+            form PersonalGalaxy\X\Web\Authentication\FormResolver:
+                - $app.queryBus
+                - $app.commandBus
+
+        storage:
+            memory Innmind\HttpAuthentication\ViaStorage\InMemory: []
+
+    sessionManager Innmind\HttpSession\Manager\Native: []

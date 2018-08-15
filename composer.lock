@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba43f572a325a524a57896dbd9eb820c",
+    "content-hash": "df2e747367f362bb294fa6ab9233753c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -640,16 +640,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "3.7.2",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "bb9c8772c2b0961f56c8f7a79214ee49549ac90f"
+                "reference": "16b0a74ddcaba245db752862551db6f7a33e44a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/bb9c8772c2b0961f56c8f7a79214ee49549ac90f",
-                "reference": "bb9c8772c2b0961f56c8f7a79214ee49549ac90f",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/16b0a74ddcaba245db752862551db6f7a33e44a2",
+                "reference": "16b0a74ddcaba245db752862551db6f7a33e44a2",
                 "shasum": ""
             },
             "require": {
@@ -687,7 +687,7 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2018-08-12T14:26:55+00:00"
+            "time": "2018-08-15T09:27:53+00:00"
         },
         {
             "name": "innmind/http-authentication",
@@ -741,21 +741,21 @@
         },
         {
             "name": "innmind/http-framework",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpFramework.git",
-                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e"
+                "reference": "8a32431901e0f2a9b474cd5699010f67831bba21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
-                "reference": "02f70ba693e70b3a26d2e3e726c30180ad3ea60e",
+                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/8a32431901e0f2a9b474cd5699010f67831bba21",
+                "reference": "8a32431901e0f2a9b474cd5699010f67831bba21",
                 "shasum": ""
             },
             "require": {
                 "innmind/compose": "^1.7",
-                "innmind/http": "^3.6",
+                "innmind/http": "^3.8",
                 "innmind/http-authentication": "^1.1",
                 "innmind/router": "^1.0",
                 "php": "~7.2",
@@ -790,7 +790,7 @@
                 "framework",
                 "http"
             ],
-            "time": "2018-08-13T06:35:59+00:00"
+            "time": "2018-08-14T05:48:48+00:00"
         },
         {
             "name": "innmind/http-server",
@@ -838,6 +838,53 @@
                 "server"
             ],
             "time": "2018-08-12T14:32:35+00:00"
+        },
+        {
+            "name": "innmind/http-session",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpSession.git",
+                "reference": "ead2fa737091d2b73bb5a1242d733d2ec529728a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpSession/zipball/ead2fa737091d2b73bb5a1242d733d2ec529728a",
+                "reference": "ead2fa737091d2b73bb5a1242d733d2ec529728a",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "^3.7",
+                "innmind/immutable": "^2.8",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpSession\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP session",
+            "homepage": "http://github.com/Innmind/HttpSession",
+            "keywords": [
+                "http",
+                "session"
+            ],
+            "time": "2018-08-15T09:58:11+00:00"
         },
         {
             "name": "innmind/http-transport",
@@ -1324,16 +1371,16 @@
         },
         {
             "name": "innmind/time-continuum",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/TimeContinuum.git",
-                "reference": "b69cf221fa52b81dc4065af1957d843a774e990d"
+                "reference": "867f0352471329b8f23d26046be185b7b199887d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/TimeContinuum/zipball/b69cf221fa52b81dc4065af1957d843a774e990d",
-                "reference": "b69cf221fa52b81dc4065af1957d843a774e990d",
+                "url": "https://api.github.com/repos/Innmind/TimeContinuum/zipball/867f0352471329b8f23d26046be185b7b199887d",
+                "reference": "867f0352471329b8f23d26046be185b7b199887d",
                 "shasum": ""
             },
             "require": {
@@ -1363,7 +1410,7 @@
             "keywords": [
                 "time"
             ],
-            "time": "2018-04-28T14:03:34+00:00"
+            "time": "2018-08-15T08:30:18+00:00"
         },
         {
             "name": "innmind/url",

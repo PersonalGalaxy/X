@@ -9,6 +9,10 @@ use Innmind\Http\Message\Response;
 use Innmind\Templating\Engine;
 use Tests\PersonalGalaxy\X\Web\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class IndexTest extends TestCase
 {
     public function testInterface()
@@ -26,7 +30,7 @@ class IndexTest extends TestCase
         $response = $this->request('get', '/');
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertSame(200, $response->statusCode()->value());
+        $this->assertSame(401, $response->statusCode()->value());
         $this->assertNotEmpty((string) $response->body());
     }
 }

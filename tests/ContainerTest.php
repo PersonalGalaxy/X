@@ -7,6 +7,7 @@ use Innmind\Compose\ContainerBuilder\ContainerBuilder;
 use Innmind\Url\Path;
 use Innmind\CLI\Commands;
 use Innmind\CommandBus\CommandBusInterface;
+use Innmind\TimeContinuum\TimeContinuumInterface;
 use Innmind\Immutable\Map;
 use Symfony\Component\Yaml\Yaml;
 use PHPUnit\Framework\TestCase;
@@ -25,5 +26,6 @@ class ContainerTest extends TestCase
 
         $this->assertInstanceOf(Commands::class, $container->get('commands'));
         $this->assertInstanceOf(CommandBusInterface::class, $container->get('commandBus'));
+        $this->assertInstanceOf(TimeContinuumInterface::class, $container->get('clock'));
     }
 }

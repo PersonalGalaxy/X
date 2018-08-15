@@ -32,6 +32,8 @@ dependencies:
 expose:
     commands: $commands
     commandBus: $appCommandBus
+    queryBus: $queryBus
+    clock: $infrastructure.clock
 
 services:
     commands Innmind\CLI\Commands:
@@ -63,6 +65,9 @@ services:
             - '@decorated'
             - $neo4j.manager
 
+    queryBus PersonalGalaxy\X\QueryBus:
+        - $queryHandlers
+
     handlers merge:
         - $component.identity.handlers
         - $component.calendar.handlers
@@ -75,6 +80,9 @@ services:
         - $component.files.listeners
         - $component.rss.listeners
         - $listeners.override
+
+    queryHandlers merge:
+        - $component.identity.queryHandlers
 
     listeners:
         override map<string, Innmind\Immutable\SetInterface>:
@@ -164,6 +172,13 @@ services:
 
             listener:
                 recoveryCodes PersonalGalaxy\X\Component\Identity\Listener\RecoveryCodes: []
+
+            queryHandlers map<string, callable>:
+                - <PersonalGalaxy\X\Component\Identity\Query\FindIdentity, $component.identity.queryHandler.findIdentity>
+
+            queryHandler:
+                findIdentity PersonalGalaxy\X\Component\Identity\QueryHandler\FindIdentityHandler:
+                    - $component.identity.repository
 
             repository PersonalGalaxy\X\Repository::build:
                 - $neo4j.manager
