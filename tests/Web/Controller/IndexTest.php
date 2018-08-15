@@ -26,7 +26,7 @@ class IndexTest extends TestCase
         $response = $this->request('get', '/');
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertSame(200, $response->statusCode()->value());
+        $this->assertSame(401, $response->statusCode()->value());
         $this->assertNotEmpty((string) $response->body());
     }
 }
