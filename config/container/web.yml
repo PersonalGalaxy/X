@@ -31,6 +31,7 @@ expose:
 services:
     requestHandler stack:
         - $requestHandler.debug
+        - $requestHandler.saveSession
         # - $framework.enforceHttps
         - $framework.authenticate
         - $framework.router
@@ -39,6 +40,10 @@ services:
         debug PersonalGalaxy\X\Web\RequestHandler\Debug:
             - '@decorated'
             - $debug
+
+        saveSession PersonalGalaxy\X\Web\RequestHandler\SaveSession:
+            - '@decorated'
+            - $sessionManager
 
     controllers map<string, Innmind\HttpFramework\Controller>:
         - <index, $controllers.index>
