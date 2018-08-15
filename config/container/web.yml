@@ -15,7 +15,7 @@ dependencies:
     framework @innmind/http-framework/container.yml:
         routes: $routes
         controllers: $controllers
-        authenticator: $authentication.authenticator
+        authenticator: $authentication.authenticatorStack
         authenticationFallbacks: $authentication.fallbacks
         routePatternToAuthenticate: '~^/~'
 
@@ -48,16 +48,35 @@ services:
             - $templating.engine
 
     authentication:
+        authenticatorStack stack:
+            - $authentication.authenticator.storage
+            - $authentication.authenticator.session
+            - $authentication.authenticator
+
+        authenticator:
+            session PersonalGalaxy\X\Web\Authentication\ViaSession:
+                - '@decorated'
+                - $sessionManager
+
+            storage Innmind\HttpAuthentication\ViaStorage:
+                - '@decorated'
+                - $authentication.storage.memory
+
         fallbacks map<string, Innmind\HttpFramework\Authenticate\Fallback>:
             - <Innmind\HttpAuthentication\Exception\NoAuthenticationProvided, $authentication.fallbacks.login>
             - <PersonalGalaxy\X\Web\Exception\UserNotFound, $authentication.fallbacks.login>
             - <PersonalGalaxy\Identity\Exception\InvalidPassword, $authentication.fallbacks.login>
 
         fallbacks:
-            login PersonalGalaxy\X\Web\Authentication\Login:
+            login PersonalGalaxy\X\Web\Authentication\Fallback\Login:
                 - $templating.engine
 
         resolver:
             form PersonalGalaxy\X\Web\Authentication\FormResolver:
                 - $app.queryBus
                 - $app.commandBus
+
+        storage:
+            memory Innmind\HttpAuthentication\ViaStorage\InMemory: []
+
+    sessionManager Innmind\HttpSession\Manager\Native: []

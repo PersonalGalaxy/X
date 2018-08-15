@@ -9,6 +9,10 @@ use Innmind\Http\Message\Response;
 use Innmind\Templating\Engine;
 use Tests\PersonalGalaxy\X\Web\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class IndexTest extends TestCase
 {
     public function testInterface()
