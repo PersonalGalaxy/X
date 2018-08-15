@@ -640,16 +640,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "4f23a24de5e65fd97a349a68d147096bd7d45dee"
+                "reference": "16b0a74ddcaba245db752862551db6f7a33e44a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/4f23a24de5e65fd97a349a68d147096bd7d45dee",
-                "reference": "4f23a24de5e65fd97a349a68d147096bd7d45dee",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/16b0a74ddcaba245db752862551db6f7a33e44a2",
+                "reference": "16b0a74ddcaba245db752862551db6f7a33e44a2",
                 "shasum": ""
             },
             "require": {
@@ -687,7 +687,7 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2018-08-13T15:56:19+00:00"
+            "time": "2018-08-15T09:27:53+00:00"
         },
         {
             "name": "innmind/http-authentication",
@@ -841,16 +841,16 @@
         },
         {
             "name": "innmind/http-session",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpSession.git",
-                "reference": "914a3716318022468f8e7c0923fc22c6800a973b"
+                "reference": "ead2fa737091d2b73bb5a1242d733d2ec529728a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpSession/zipball/914a3716318022468f8e7c0923fc22c6800a973b",
-                "reference": "914a3716318022468f8e7c0923fc22c6800a973b",
+                "url": "https://api.github.com/repos/Innmind/HttpSession/zipball/ead2fa737091d2b73bb5a1242d733d2ec529728a",
+                "reference": "ead2fa737091d2b73bb5a1242d733d2ec529728a",
                 "shasum": ""
             },
             "require": {
@@ -884,7 +884,7 @@
                 "http",
                 "session"
             ],
-            "time": "2018-08-12T16:27:52+00:00"
+            "time": "2018-08-15T09:58:11+00:00"
         },
         {
             "name": "innmind/http-transport",
