@@ -34,6 +34,7 @@ services:
         - $requestHandler.saveSession
         # - $framework.enforceHttps
         - $framework.authenticate
+        - $requestHandler.sendSessionCookie
         - $framework.router
 
     requestHandler:
@@ -44,6 +45,12 @@ services:
         saveSession PersonalGalaxy\X\Web\RequestHandler\SaveSession:
             - '@decorated'
             - $sessionManager
+
+        sendSessionCookie PersonalGalaxy\X\Web\RequestHandler\SendSessionCookie:
+            - '@decorated'
+            - $authentication.storage.memory
+            - $sessionManager
+            - $app.clock
 
     controllers map<string, Innmind\HttpFramework\Controller>:
         - <index, $controllers.index>
