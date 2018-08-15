@@ -54,10 +54,16 @@ services:
 
     controllers map<string, Innmind\HttpFramework\Controller>:
         - <index, $controllers.index>
+        - <logout, $controllers.logout>
 
     controllers:
         index PersonalGalaxy\X\Web\Controller\Index:
             - $templating.engine
+
+        logout PersonalGalaxy\X\Web\Controller\Logout:
+            - $sessionManager
+            - $framework.urlGenerator
+            - $app.clock
 
     authentication:
         authenticatorStack stack:
