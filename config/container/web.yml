@@ -7,6 +7,11 @@ arguments:
     debug: bool
 
 dependencies:
+    app app.yml:
+        metas: $metas
+        neo4jPassword: $neo4jPassword
+        filesStoragePath: $filesStoragePath
+
     framework @innmind/http-framework/container.yml:
         routes: $routes
         controllers: $controllers
@@ -15,11 +20,6 @@ dependencies:
 
     templating @innmind/templating/container.yml:
         templates: $templates
-
-    app app.yml:
-        metas: $metas
-        neo4jPassword: $neo4jPassword
-        filesStoragePath: $filesStoragePath
 
 expose:
     requestHandler: $requestHandler
