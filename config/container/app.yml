@@ -162,6 +162,7 @@ services:
                     - $component.identity.repository
                 validate2FACode PersonalGalaxy\Identity\Handler\Identity\Validate2FACodeHandler:
                     - $component.identity.repository
+                    - $infrastructure.clock
                 verifyPassword PersonalGalaxy\Identity\Handler\Identity\VerifyPasswordHandler:
                     - $component.identity.repository
 

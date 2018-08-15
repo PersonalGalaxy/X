@@ -2330,22 +2330,23 @@
         },
         {
             "name": "personal-galaxy/identity",
-            "version": "1.3.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PersonalGalaxy/Identity.git",
-                "reference": "455863fdc081d271c77c05a5f2c9292a66c3a63c"
+                "reference": "d3e3778b457e310443dc08aa6eb97df76793a662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PersonalGalaxy/Identity/zipball/455863fdc081d271c77c05a5f2c9292a66c3a63c",
-                "reference": "455863fdc081d271c77c05a5f2c9292a66c3a63c",
+                "url": "https://api.github.com/repos/PersonalGalaxy/Identity/zipball/d3e3778b457e310443dc08aa6eb97df76793a662",
+                "reference": "d3e3778b457e310443dc08aa6eb97df76793a662",
                 "shasum": ""
             },
             "require": {
                 "innmind/event-bus": "^2.1",
                 "innmind/immutable": "^2.8",
                 "innmind/specification": "^1.0",
+                "innmind/time-continuum": "^1.2",
                 "paragonie/multi-factor": "^0.2.2",
                 "php": "~7.2"
             },
@@ -2370,7 +2371,7 @@
                 }
             ],
             "homepage": "http://github.com/PersonalGalaxy/Identity",
-            "time": "2018-07-21T13:56:58+00:00"
+            "time": "2018-08-15T15:00:04+00:00"
         },
         {
             "name": "personal-galaxy/rss",
