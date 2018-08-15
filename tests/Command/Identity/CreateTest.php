@@ -7,12 +7,13 @@ use PersonalGalaxy\X\{
     Command\Identity\Create,
     Component\Identity\Entity\Identity,
     Component\Identity\Listener\RecoveryCodes,
+    Component\Identity\Listener\SecretKey,
 };
 use PersonalGalaxy\Identity\{
     Command\CreateIdentity,
     Command\Identity\Enable2FA,
     Entity\Identity\Email,
-    Entity\Identity\SecretKey,
+    Entity\Identity\SecretKey as SecretKey2FA,
     Entity\Identity\RecoveryCode,
     Event\Identity\TwoFactorAuthenticationWasEnabled,
     Exception\IdentityAlreadyExist,
@@ -54,7 +55,8 @@ class CreateTest extends TestCase
             new Create(
                 $this->createMock(CommandBusInterface::class),
                 $this->createMock(Manager::class),
-                new RecoveryCodes
+                new RecoveryCodes,
+                new SecretKey
             )
         );
     }
@@ -64,7 +66,8 @@ class CreateTest extends TestCase
         $command = new Create(
             $this->createMock(CommandBusInterface::class),
             $this->createMock(Manager::class),
-            new RecoveryCodes
+            new RecoveryCodes,
+            new SecretKey
         );
         $expected = <<<DESC
 identity:create email --enable-2fa
@@ -80,7 +83,8 @@ DESC;
         $create = new Create(
             $bus = $this->createMock(CommandBusInterface::class),
             $manager = $this->createMock(Manager::class),
-            new RecoveryCodes
+            new RecoveryCodes,
+            new SecretKey
         );
         $manager
             ->expects($this->once())
@@ -188,7 +192,8 @@ DESC;
         $create = new Create(
             $bus = $this->createMock(CommandBusInterface::class),
             $manager = $this->createMock(Manager::class),
-            new RecoveryCodes
+            new RecoveryCodes,
+            new SecretKey
         );
         $manager
             ->expects($this->once())
@@ -280,11 +285,12 @@ DESC;
         $create = new Create(
             $bus = $this->createMock(CommandBusInterface::class),
             $manager = $this->createMock(Manager::class),
-            $codes = new RecoveryCodes
+            $codes = new RecoveryCodes,
+            $key = new SecretKey
         );
-        $codes(new TwoFactorAuthenticationWasEnabled(
+        $codes($event = new TwoFactorAuthenticationWasEnabled(
             new Identity('9e20a588-6743-4703-88e9-238a64b9f4b7'),
-            new SecretKey,
+            new SecretKey2FA,
             Set::of(
                 RecoveryCode::class,
                 new RecoveryCode,
@@ -299,6 +305,7 @@ DESC;
                 new RecoveryCode
             )
         ));
+        $key($event);
         $manager
             ->expects($this->once())
             ->method('identities')
@@ -384,10 +391,14 @@ DESC;
             ->method('output')
             ->willReturn($output = $this->createMock(Writable::class));
         $output
-            ->expects($this->exactly(13))
+            ->expects($this->exactly(14))
             ->method('write');
         $output
             ->expects($this->at(2))
+            ->method('write')
+            ->with(Str::of("\nSecret key : {$key->key()}\n"));
+        $output
+            ->expects($this->at(3))
             ->method('write')
             ->with(Str::of("\nRecovery codes (to be kept in a safe place) : \n"));
 

@@ -137,6 +137,7 @@ services:
                     - $appCommandBus
                     - $neo4j.manager
                     - $component.identity.listener.recoveryCodes
+                    - $component.identity.listener.secretKey
 
             handlers map<string, callable>:
                 - <PersonalGalaxy\Identity\Command\CreateIdentity, $component.identity.handler.createIdentity>
@@ -169,9 +170,11 @@ services:
             listeners:
                 recoveryCodes set<callable>:
                     - $component.identity.listener.recoveryCodes
+                    - $component.identity.listener.secretKey
 
             listener:
                 recoveryCodes PersonalGalaxy\X\Component\Identity\Listener\RecoveryCodes: []
+                secretKey PersonalGalaxy\X\Component\Identity\Listener\SecretKey: []
 
             queryHandlers map<string, callable>:
                 - <PersonalGalaxy\X\Component\Identity\Query\FindIdentity, $component.identity.queryHandler.findIdentity>

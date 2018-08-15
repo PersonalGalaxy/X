@@ -6,6 +6,7 @@ namespace PersonalGalaxy\X\Command\Identity;
 use PersonalGalaxy\X\Component\Identity\{
     Entity\Identity,
     Listener\RecoveryCodes,
+    Listener\SecretKey,
 };
 use PersonalGalaxy\Identity\{
     Command\CreateIdentity,
@@ -32,15 +33,18 @@ final class Create implements Command
     private $bus;
     private $manager;
     private $recoveryCodes;
+    private $secretKey;
 
     public function __construct(
         CommandBusInterface $bus,
         Manager $manager,
-        RecoveryCodes $recoveryCodes
+        RecoveryCodes $recoveryCodes,
+        SecretKey $secretKey
     ) {
         $this->bus = $bus;
         $this->manager = $manager;
         $this->recoveryCodes = $recoveryCodes;
+        $this->secretKey = $secretKey;
     }
 
     public function __invoke(Environment $env, Arguments $arguments, Options $options): void
@@ -72,6 +76,8 @@ final class Create implements Command
 
         if ($options->contains('enable-2fa')) {
             $this->bus->handle(new Enable2FA($id));
+            $key = $this->secretKey->key();
+            $env->output()->write(Str::of("\nSecret key : $key\n"));
             $env->output()->write(Str::of("\nRecovery codes (to be kept in a safe place) : \n"));
             $this
                 ->recoveryCodes
