@@ -12,18 +12,18 @@ dependencies:
         neo4jPassword: $neo4jPassword
         filesStoragePath: $filesStoragePath
 
+    authentication @innmind/http-authentication/container.yml:
+        formResolver: $authentication.resolver.form
+
+    templating @innmind/templating/container.yml:
+        templates: $templates
+
     framework @innmind/http-framework/container.yml:
         routes: $routes
         controllers: $controllers
         authenticator: $authentication.authenticatorStack
         authenticationFallbacks: $authentication.fallbacks
         routePatternToAuthenticate: '~^/~'
-
-    authentication @innmind/http-authentication/container.yml:
-        formResolver: $authentication.resolver.form
-
-    templating @innmind/templating/container.yml:
-        templates: $templates
 
 expose:
     requestHandler: $requestHandler
